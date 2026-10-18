@@ -1,6 +1,6 @@
 # Spec 001: Portfolio website, version 1
 
-- **Status:** draft v2, waiting for Hamza's review (v1 → v2 changes: see §15)
+- **Status:** draft v3, Hamza answered §13 Q1–Q7; waiting for his approval of the whole spec (changes: §15, §16)
 - **Date:** 2026-10-18
 - **Owner:** Hamza Atiq decides · Claude builds
 - **Rules:** follows `specs/constitution.md`
@@ -50,7 +50,7 @@ One main page with these sections, **in this order**, plus one page per project:
 
 | # | Section | Content in v1 | Source |
 |---|---|---|---|
-| 1 | **About** (top) | Round photo, name, the line `// electrical engineer → AI`, a short honest summary (2–3 sentences), "Interested in" chips, buttons: Download CV, GitHub, LinkedIn, Email | `profile.yml`, `interests.yml` |
+| 1 | **About** (top) | Round photo, name, the line `// electrical engineer → AI`, a short honest summary (2–3 sentences, draft in §4.2), "Interested in" chips, one small line "English: Duolingo English Test 115 (Feb 2026)" with its official verification link (§13 Q2), buttons: Download CV, GitHub, LinkedIn, Email | `profile.yml`, `interests.yml` |
 | 2 | **News** | Dated one-line items, newest first, each with a proof or code link. Shows the latest 6; "show all" opens the rest | `news.yml` |
 | 3 | **Research interests** | Each interest area with 1–2 sentences on what Hamza wants to study. The About chips jump to this section | `interests.yml` |
 | 4 | **Research projects** | P-013 "If one power line fails, does anything overload?" (N-1 contingency screening with a graph neural network). More are added when finished | `projects/*.md` with `kind: research` |
@@ -80,12 +80,38 @@ The exact wording and proof link of each go in `awards.yml`, and Hamza approves 
 | AMD Developer Hackathon 2026: Finalist, team of 3 (my part: training data and testing on AMD GPUs) | lablab certificate + team page |
 | Solar Production and Load Prediction (Kaggle, GIKI DNN Bootcamp 2024): 10th place | Kaggle leaderboard screenshot |
 | Meta Hacker Cup 2025, Round 1: 7,798th | Certificate |
-| M(IT)² competition: rank 482 of 559 (year to be confirmed by Hamza) | LinkedIn post |
+| M(IT)² coding competition 2025, Round 1: rank 482 of 559 | LinkedIn post |
 | HackerRank Orchestrate (May 2026): rank 427 of 1,349 | LinkedIn post + screenshot |
 
 **Never on the site** (no proof): "Winner", "1st place Hugging Face prize", CS50x Puzzle Day 2026 "10/10",
 NeuroOceans "40% less time", GIKI "of 55" (until the total is shown in a screenshot).
-**Not in Awards:** the Duolingo English Test score is a language test, not an award (see §13 Q2).
+**Not in Awards:** the Duolingo English Test score is a language test, not an award. It is shown in About (§13 Q2).
+
+**How the list is shown (§13 Q4):** all items above are shown, because they are all international competitions.
+The first six (UCLA, BlueQubit × Yale, CALICO, CS50 2025, AMD, GIKI) are the main list. Meta Hacker Cup, M(IT)² and
+HackerRank go in a smaller "Other international competitions" list right below it. (CALICO keeps one line with both
+its Pakistan and global rank.)
+
+### 4.2 Draft About text (Claude's draft, Hamza edits and approves; §13 Q6)
+
+- **Line:** `// electrical engineer → AI`
+- **Summary (3 sentences):** "I am an electrical engineer (BS, University of Wah, 2019) who has been building AI
+  projects since 2024. I have worked as a solar site engineer and as a machine learning engineer, and I now apply
+  machine learning to power-system problems, such as quickly finding which power-line failures could overload a grid.
+  I am looking for a funded MS/PhD position in the USA (Fall 2027) where I can do research where power systems and
+  AI meet."
+- **Interest chips (in this order):** Power systems · Smart grid · Embedded systems · Robotics · Batteries & EVs ·
+  TinyML · Wireless.
+- **Research interests section (one sentence each, draft):**
+  - *Power systems:* using fast AI models to help check grid safety, for example N-1 contingency screening (P-013).
+  - *Smart grid:* forecasting solar power and load, so that a grid with a lot of solar stays stable.
+  - *Embedded systems:* running useful models on small, low-power devices.
+  - *Robotics:* control and simulation of robots.
+  - *Batteries & EVs:* predicting battery health and smart charging.
+  - *TinyML:* machine learning on microcontrollers with very little memory.
+  - *Wireless:* using machine learning for wireless communication.
+- Every sentence above is only a draft. Hamza can change, remove or re-order any of it; nothing goes live before his
+  `reviewed_by_hamza` date (FR-4).
 
 ## 5. Functional requirements
 
@@ -135,8 +161,10 @@ NeuroOceans "40% less time", GIKI "of 55" (until the total is shown in a screens
 - **FR-16** Filter chips (see §4) work in the browser and do not need the database.
 - **FR-17** A search box finds projects, awards, news and teaching items. It asks the database through a server
   function. If the database does not answer within 2 seconds, it searches the copy of the data built into the site.
-- **FR-18** The site **always starts in dark mode** (the chosen look). A ☀/☾ button switches to light mode, and the
-  choice is remembered on that device. (Open question §13 Q1.)
+- **FR-18** At the first visit the site **follows the visitor's device setting**: a phone or laptop set to light
+  shows light mode, one set to dark shows dark mode. If the device gives no setting, the site starts dark. A ☀/☾
+  button switches the mode, and the visitor's choice is remembered on that device and wins over the device setting.
+  The page must not flash the wrong mode while loading. (Decided in §12, Q1.)
 - **FR-19** Photo: round crop only. Dark mode uses `hamza_graphite_amber_glow.png`, light mode uses
   `hamza_warm_cream.png` (both made from `capture 1.PNG`, now in `_portfolio_journey/assets/photo/`). The full-size
   versions are never shown, because of an edge mark on the right arm.
@@ -148,8 +176,10 @@ NeuroOceans "40% less time", GIKI "of 55" (until the total is shown in a screens
   44 × 44 px so they are easy to tap.
 - **FR-23** Images are resized and converted to modern formats (WebP/AVIF) automatically. The photo loads first;
   images further down load only when the visitor scrolls near them.
-- **FR-24** The Download CV button appears only when `profile.yml` has `cv_reviewed_by_hamza: YYYY-MM-DD`
-  (the CV must follow the same proof rules as the site; see §13 Q3).
+- **FR-24** The site has a Download CV button (§13 Q3). It appears only when `profile.yml` has
+  `cv_reviewed_by_hamza: YYYY-MM-DD` (the CV must follow the same proof rules as the site). The CV is a PDF exported
+  from Hamza's Google Doc "Hamza CV EE" and saved in the repo. Claude checked the Doc on 2026-10-18 (§13 Q3 lists
+  the last lines to fix); the date is filled in after those fixes.
 - **FR-25** The email address is shown so people can copy it and as a "mailto" link; it is not hidden behind a form.
 
 ## 6. Look and feel (agreed in the browser sessions, 2026-10-18)
@@ -183,8 +213,8 @@ status: published              # draft | published
 reviewed_by_hamza: 2026-10-18  # filled only after Hamza approves
 date: 2026-10
 tags: [power-systems, graph-neural-networks]
-team: solo                     # solo | "team of N"   (to be confirmed by Hamza)
-my_role: "Built everything: data generation, model, solver check, tests, live page"   # to be confirmed
+team: solo                     # solo | "team of N"   (confirmed by Hamza 2026-10-18)
+my_role: "Built everything: data generation, model, solver check, tests, live page"   # confirmed: solo build
 summary: "An AI ranks all 80 possible line failures; a real power-flow solver confirms only the risky ones."
 result: "Caught at least 99.91% of dangerous cases in all 50 tests (8,750 unseen days); 2.25× faster (median)."
 cover: { src: images/p013/cover.png, alt: "IEEE 57-bus grid map showing the lines checked by the solver" }
@@ -240,7 +270,9 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 - [ ] Pushing a broken file (empty `my_role` on a team project, a dead link, an unlisted proof file) is refused with a
       clear message, and the live site does not change.
 - [ ] An item with `status: draft` is not on the public site, but is visible on the `preview` branch link.
-- [ ] The light/dark button works, the photo changes with the mode, and the choice is remembered after reload.
+- [ ] A device set to light opens the site in light mode and a device set to dark opens it in dark mode, with no
+      flash of the wrong mode. The ☀/☾ button works, the photo changes with the mode, and the choice is remembered
+      after reload.
 - [ ] With the database switched off, every page loads and search still returns results.
 - [ ] Lighthouse on mobile: Performance ≥ 90 and Accessibility ≥ 90.
 - [ ] The secret-key scan passes; no private data (date of birth, ID, phone, address) in the repo.
@@ -258,18 +290,33 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 | Look | Graphite & Electric Amber: B's attractive style + A's calm reading. No art, no headline numbers |
 | Interactions | Filter chips, cards that react; AI chat in v2 |
 | Images | Real images only; round photo; dark = graphite glow, light = warm cream |
+| Q1 Theme at first visit (Hamza, 2026-10-18) | Follow the visitor's device setting; dark if there is no setting; button choice is remembered |
+| Q2 Duolingo 115 (Hamza) | Show it: one small line in About with the official verification link (not the PDF, which shows the date of birth) |
+| Q3 CV button (Hamza) | Add it. Hamza says the CV is corrected; Claude's check found a few lines left (§13 Q3). Button goes live after they are fixed |
+| Q4 Lower ranks (Hamza) | Show them, they are international competitions: smaller "Other international competitions" list under the main list |
+| Q5 P-013 (Hamza) | Solo; Hamza built everything |
+| Q6 About text (Hamza) | Claude drafts (§4.2); Hamza edits and approves |
+| Q7 M(IT)² year (Hamza) | 2025 |
 
-## 13. Open questions for Hamza (my default answer is used until he decides)
+## 13. Questions for Hamza: answered 2026-10-18
 
-- **Q1 Theme at first visit.** Always start dark (default), or follow the visitor's phone setting (light phones start light)?
-- **Q2 Duolingo English Test 115.** Leave it off the site (default; it is on the CV), or show it in About?
-- **Q3 CV file.** The current CV still has the unproven lines from `cv_review_2026-10-17.md`. Default: no
-  Download CV button until a corrected CV is ready and approved.
-- **Q4 Lower ranks** (Meta 7,798th, M(IT)² 482/559, HackerRank 427/1,349, CALICO global 269/375). Default: show them
-  all, but in a smaller "Other competitions" list under the strong ones (UCLA, BlueQubit × Yale, CALICO Pakistan,
-  CS50 2025, AMD Finalist, GIKI 10th).
-- **Q5 P-013 team and role.** Default: solo, "built everything" (all 4 public commits are Hamza's). Please confirm.
-- **Q6 The About summary text and interest list.** Claude drafts them from `hamza-profile-facts`; Hamza edits and approves.
+All seven questions are answered; the decisions are in §12. What is still left:
+
+- **Q3 CV check (Claude read the Google Doc "Hamza CV EE" on 2026-10-18).** Fixed since the last check: "Winner"
+  is gone, "1st place HF prize" is gone, NeuroOceans "40%" is gone, P-013 is added. Still to fix before the CV button
+  goes live:
+  1. CS50x Puzzle Day **"10/10 (2026)"**: the only proof is a participation certificate. Remove "10/10" or add a CS50
+     email/scoreboard showing it.
+  2. GIKI **"10/55"**: rank 10 is proven, the total 55 is not shown. Write "10th place", or add a screenshot showing 55.
+  3. AMD Lumi: **"Finalist in the HuggingFace community prize track"**: the proof shows "Finalist" in the hackathon,
+     not in the HF prize track. **"7th/46 on the EQ-Bench"** is new and has no proof yet. The text does not say
+     "team of 3" or Hamza's own part (training data + testing on AMD GPUs).
+  4. Formatting: the LeetCode line and every Skills line show the `**` star signs as text, and the Berkeley/UCLA
+     lines use special "math bold" letters (they turn into strange signs in some PDF readers and screen readers).
+  5. Optional: the Duolingo link opens a PDF that shows the date of birth; the official `certs.duolingo.com` link is
+     safer.
+- **Duolingo link:** Hamza sends the official verification link (from the Duolingo "share certificate" page).
+- **Optional:** GIKI total "55" screenshot; BlueQubit 53/549 leaderboard screenshot.
 
 ## 14. Research notes behind the choices
 
@@ -305,3 +352,13 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 12. **Images from project repos** handled (FR-2); daily run deploys only when something changed (FR-12).
 13. **Preview branch** made exact: it shows drafts, stays private, and never touches the public site or database (FR-13).
 14. **Unknown facts marked** instead of guessed: M(IT)² year, P-013 solo/role (Q5).
+
+## 16. Changes from v2 → v3 (Hamza's answers, 2026-10-18)
+
+1. **Theme:** follows the device setting (dark if none), with no flash of the wrong mode (FR-18, §11).
+2. **Duolingo 115** shown as one line in About with the official link (§4, §4.1).
+3. **CV button** kept, live after the last CV fixes in §13 (FR-24).
+4. **Lower ranks** shown in an "Other international competitions" list (§4.1).
+5. **P-013** confirmed solo, built by Hamza (§7).
+6. **About text and interests** drafted (§4.2), waiting for Hamza's edits.
+7. **M(IT)² year** = 2025 (§4.1).
