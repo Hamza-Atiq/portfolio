@@ -1,7 +1,7 @@
 # Spec 001: Portfolio website, version 1
 
-- **Status:** draft v3, Hamza answered §13 Q1–Q7; waiting for his approval of the whole spec (changes: §15, §16)
-- **Date:** 2026-10-18
+- **Status:** v4, **APPROVED by Hamza 2026-10-24** ("start next work"). Changes: §15, §16, §17
+- **Date:** 2026-10-18 (v4: 2026-10-24)
 - **Owner:** Hamza Atiq decides · Claude builds
 - **Rules:** follows `specs/constitution.md`
 - **Method:** spec-driven development from the Agent Factory book (`spec-driven-development-crash-course`):
@@ -178,8 +178,8 @@ its Pakistan and global rank.)
   images further down load only when the visitor scrolls near them.
 - **FR-24** The site has a Download CV button (§13 Q3). It appears only when `profile.yml` has
   `cv_reviewed_by_hamza: YYYY-MM-DD` (the CV must follow the same proof rules as the site). The CV is a PDF exported
-  from Hamza's Google Doc "Hamza CV EE" and saved in the repo. Claude checked the Doc on 2026-10-18 (§13 Q3 lists
-  the last lines to fix); the date is filled in after those fixes.
+  from Hamza's Google Doc "Hamza CV EE" and saved in the repo. **Hamza confirmed on 2026-10-24 that the CV is
+  correct**, so `cv_reviewed_by_hamza: 2026-10-24`. The CV is Hamza's own document; Claude does not edit or re-check it.
 - **FR-25** The email address is shown so people can copy it and as a "mailto" link; it is not hidden behind a form.
 
 ## 6. Look and feel (agreed in the browser sessions, 2026-10-18)
@@ -292,31 +292,19 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 | Images | Real images only; round photo; dark = graphite glow, light = warm cream |
 | Q1 Theme at first visit (Hamza, 2026-10-18) | Follow the visitor's device setting; dark if there is no setting; button choice is remembered |
 | Q2 Duolingo 115 (Hamza) | Show it: one small line in About with the official verification link (not the PDF, which shows the date of birth) |
-| Q3 CV button (Hamza) | Add it. Hamza says the CV is corrected; Claude's check found a few lines left (§13 Q3). Button goes live after they are fixed |
+| Q3 CV button (Hamza) | Add it. Hamza confirmed the CV is correct (2026-10-24); the button goes live with the site |
 | Q4 Lower ranks (Hamza) | Show them, they are international competitions: smaller "Other international competitions" list under the main list |
 | Q5 P-013 (Hamza) | Solo; Hamza built everything |
 | Q6 About text (Hamza) | Claude drafts (§4.2); Hamza edits and approves |
 | Q7 M(IT)² year (Hamza) | 2025 |
 
-## 13. Questions for Hamza: answered 2026-10-18
+## 13. Questions for Hamza: all closed (2026-10-24)
 
-All seven questions are answered; the decisions are in §12. What is still left:
-
-- **Q3 CV check (Claude read the Google Doc "Hamza CV EE" on 2026-10-18).** Fixed since the last check: "Winner"
-  is gone, "1st place HF prize" is gone, NeuroOceans "40%" is gone, P-013 is added. Still to fix before the CV button
-  goes live:
-  1. CS50x Puzzle Day **"10/10 (2026)"**: the only proof is a participation certificate. Remove "10/10" or add a CS50
-     email/scoreboard showing it.
-  2. GIKI **"10/55"**: rank 10 is proven, the total 55 is not shown. Write "10th place", or add a screenshot showing 55.
-  3. AMD Lumi: **"Finalist in the HuggingFace community prize track"**: the proof shows "Finalist" in the hackathon,
-     not in the HF prize track. **"7th/46 on the EQ-Bench"** is new and has no proof yet. The text does not say
-     "team of 3" or Hamza's own part (training data + testing on AMD GPUs).
-  4. Formatting: the LeetCode line and every Skills line show the `**` star signs as text, and the Berkeley/UCLA
-     lines use special "math bold" letters (they turn into strange signs in some PDF readers and screen readers).
-  5. Optional: the Duolingo link opens a PDF that shows the date of birth; the official `certs.duolingo.com` link is
-     safer.
-- **Duolingo link:** Hamza sends the official verification link (from the Duolingo "share certificate" page).
-- **Optional:** GIKI total "55" screenshot; BlueQubit 53/549 leaderboard screenshot.
+All questions are answered; the decisions are in §12.
+- **CV:** Hamza confirmed on 2026-10-24 that his CV is correct. Closed; not asked again.
+- **About text (§4.2):** Claude's draft is used. Hamza can change any sentence at any time by editing the content file.
+- **Duolingo link:** the About line uses the official verification link when it is added to `profile.yml`
+  (optional field). It is not a blocker for the build.
 
 ## 14. Research notes behind the choices
 
@@ -362,3 +350,9 @@ All seven questions are answered; the decisions are in §12. What is still left:
 5. **P-013** confirmed solo, built by Hamza (§7).
 6. **About text and interests** drafted (§4.2), waiting for Hamza's edits.
 7. **M(IT)² year** = 2025 (§4.1).
+
+## 17. Changes from v3 → v4 (2026-10-24)
+
+1. **Spec approved** by Hamza ("start next work"). Next step: `plan.md`.
+2. **CV:** Hamza confirmed it is correct; FR-24 date set to 2026-10-24; the old CV fix list in §13 is removed.
+3. **§13 closed:** About draft used as written; Duolingo link is an optional field, not a blocker.
