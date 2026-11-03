@@ -52,3 +52,22 @@ Each note: what the step said, what went wrong, what was done.
     `i.ytimg.com`); this is expected here and is checked for real in Task 14.
 16. **Audits.** `npm audit --omit=dev`: 0 vulnerabilities. `pip-audit -r checker/requirements.txt`: no known
     vulnerabilities.
+
+## Second cloud build (Task 13 Steps 0–3, Task 14 Step 1, self-review)
+
+17. **Task 13, versions in the workflow.** Python 3.12 and Node 22 (notes 1 and 8). Actions are pinned to exact
+    tags (`actions/checkout@v4.2.2`, `actions/setup-python@v5.6.0`, `actions/setup-node@v4.4.0`); the Vercel
+    CLI is pinned to `vercel@64.7.0` (newest release older than two weeks). The workflow passes `actionlint`.
+18. **Task 13, Step 2 ran on the test fixture, not real content.** There is no `content/` folder in the cloud
+    (that is Task 8). So the exact workflow commands were run with `--content tests/fixtures/good` instead of
+    `--content ../content`, and with `--skip-network` (the fixture's links are made-up `example.com`
+    addresses and this sandbox has no open internet): `python -m pytest -q` → 100 passed; the checker with
+    `--include-drafts` → exit 0, no problems; the same without `--include-drafts` → exit 0; `npx vitest run`
+    → 52 passed; `npm run build` → success. The secret scan of the whole repo (part of every checker run) is
+    clean. The real content check is done later on Hamza's computer (Task 13 Step 2 again, after Task 8).
+19. **Task 13, how the workflow passes data to `notify.py`.** `notify.py` has a small command line
+    (`python -m portfolio_checker.notify issue …` and `… keepalive …`). The workflow passes failed step ids
+    (`checker_tests checker site_tests deploy`, or `setup` when the job failed with no named step failing);
+    `notify.py` turns them into plain words ("the deploy step failed").
+20. **Task 13, Vercel Root Directory.** The workflow runs the Vercel commands inside `site/`, so the Vercel
+    project's Root Directory setting must stay empty. This is written in the README for Task 13 Step 4.

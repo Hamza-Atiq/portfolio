@@ -1,0 +1,163 @@
+# Check every content change, then sync the search database and deploy (plan Task 13; spec FR-7 to FR-14,
+# FR-26, FR-27). Vercel's own git deploy is off, so this workflow is the only way to deploy.
+name: check-and-deploy
+
+on:
+  push:
+    branches: [main, preview]
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+    inputs:
+      test_keepalive:
+        description: "Make the keepalive commit now (test of FR-27)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: check-and-deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  VERCEL_CLI: vercel@64.7.0
+  SITE_URL: ${{ vars.SITE_URL }}
+
+jobs:
+  check-and-deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4.2.2
+
+      - uses: actions/setup-python@v5.6.0
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: checker/requirements.txt
+
+      - name: Install checker
+        run: pip install -r checker/requirements.txt
+
+      - name: Checker tests
+        id: checker_tests
+        working-directory: checker
+        run: python -m pytest -q
+
+      - name: Check content and build site data
+        id: checker
+        working-directory: checker
+        env:
+          # The database address is given to main runs only (FR-13, FR-14).
+          DATABASE_URL: ${{ github.ref_name == 'main' && secrets.DATABASE_URL || '' }}
+          MODE: ${{ github.event_name == 'schedule' && 'daily' || 'push' }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          args=(--content ../content --site ../site --repo .. --mode "$MODE" --problems-file "$RUNNER_TEMP/problems.txt")
+          if [ "$BRANCH" = "preview" ]; then args+=(--include-drafts); fi
+          if [ "$BRANCH" = "main" ]; then args+=(--sync-db); fi
+          python -m portfolio_checker "${args[@]}"
+
+      - name: Did anything change? (daily run only)
+        id: changed
+        if: success()
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          new="$(cat site/public/content-hash.txt)"
+          old="$(curl -fsS "$SITE_URL/content-hash.txt" 2>/dev/null || true)"
+          if [ -n "$old" ] && [ "$old" = "$new" ]; then
+            echo "nothing changed; no deploy"
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-node@v4.4.0
+        if: success() && steps.changed.outputs.changed == 'true'
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: Install site
+        if: success() && steps.changed.outputs.changed == 'true'
+        working-directory: site
+        run: npm ci
+
+      - name: Site tests
+        id: site_tests
+        if: success() && steps.changed.outputs.changed == 'true'
+        working-directory: site
+        run: npx vitest run
+
+      - name: Deploy to Vercel
+        id: deploy
+        if: success() && steps.changed.outputs.changed == 'true'
+        working-directory: site
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          BRANCH: ${{ github.ref_name }}
+        run: |
+          if [ "$BRANCH" = "main" ]; then
+            npx --yes "$VERCEL_CLI" pull --yes --environment=production --token "$VERCEL_TOKEN"
+            npx --yes "$VERCEL_CLI" build --prod --token "$VERCEL_TOKEN"
+            npx --yes "$VERCEL_CLI" deploy --prebuilt --prod --token "$VERCEL_TOKEN"
+          else
+            npx --yes "$VERCEL_CLI" pull --yes --environment=preview --token "$VERCEL_TOKEN"
+            npx --yes "$VERCEL_CLI" build --token "$VERCEL_TOKEN"
+            npx --yes "$VERCEL_CLI" deploy --prebuilt --token "$VERCEL_TOKEN"
+          fi
+
+      # Final step A (FR-26): one GitHub issue for warnings and failures on daily and main runs.
+      - name: Open, update or close the "Site check needs attention" issue
+        if: always() && github.ref_name == 'main'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          JOB_STATUS: ${{ job.status }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          failed=""
+          [ "${{ steps.checker_tests.outcome }}" = "failure" ] && failed="$failed checker_tests"
+          [ "${{ steps.checker.outcome }}" = "failure" ] && failed="$failed checker"
+          [ "${{ steps.site_tests.outcome }}" = "failure" ] && failed="$failed site_tests"
+          [ "${{ steps.deploy.outcome }}" = "failure" ] && failed="$failed deploy"
+          if [ "$JOB_STATUS" = "failure" ] && [ -z "$failed" ]; then failed="setup"; fi
+          open="$(gh issue list --state open --search '"Site check needs attention" in:title' --json number --jq '.[0].number // ""')"
+          action="$(python -m portfolio_checker.notify issue \
+            --event "${{ github.event_name }}" --branch "${{ github.ref_name }}" \
+            --problems-file "$RUNNER_TEMP/problems.txt" --failed-steps "$failed" \
+            --open-issue "$open" --run-url "$RUN_URL" --body-file "$RUNNER_TEMP/issue.md")"
+          echo "issue action: $action"
+          case "$action" in
+            create) gh issue create --title "Site check needs attention" --assignee Hamza-Atiq --body-file "$RUNNER_TEMP/issue.md" ;;
+            update) gh issue edit "$open" --body-file "$RUNNER_TEMP/issue.md" ;;
+            close)  gh issue close "$open" --comment "A later run was clean: $RUN_URL" ;;
+          esac
+        working-directory: checker
+
+      # Final step B (FR-27): keep the daily schedule alive when main is quiet for 50+ days.
+      # A push made with GITHUB_TOKEN starts no new workflow run, so no check or deploy follows.
+      - name: Keepalive commit
+        if: always() && github.ref_name == 'main' && (github.event_name == 'schedule' || inputs.test_keepalive)
+        env:
+          TEST_KEEPALIVE: ${{ inputs.test_keepalive && 'true' || 'false' }}
+        run: |
+          last="$(git log -1 --format=%cs)"
+          needed="$(cd checker && python -m portfolio_checker.notify keepalive --last "$last")"
+          if [ "$needed" = "true" ] || [ "$TEST_KEEPALIVE" = "true" ]; then
+            date -u +%F > .github/keepalive.txt
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .github/keepalive.txt
+            git commit -m "chore: keep scheduled check alive"
+            git push
+          else
+            echo "newest commit is from $last; no keepalive needed"
+          fi
