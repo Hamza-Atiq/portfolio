@@ -19,7 +19,7 @@
 - Only `status: published` items with `reviewed_by_hamza` reach production; `--include-drafts` (preview branch only) adds drafts (FR-3, FR-4, FR-13).
 - Error messages are simple English and always name the file: `content/news.yml: item 3 ("p013-live"): the link https://… did not answer (status 404).`
 - Colours exactly as spec §6 (dark `#141417/#ECECEF/#9A9AA6/#3A3A42/#F5B83D/#2DD4BF`, light `#FAF8F4/#1D1D22/#6B6B75/#D9D4C9/#B7791F/#0F766E`); teal only for small tags; adjust only to pass WCAG AA.
-- Section titles in code style (`## news`), site name `~/hamza-atiq`. No decorative art, no headline number tiles, no count-up animation.
+- Layout and type as spec §6 (wide layout, top menu, serif titles); site name `~/hamza-atiq` in the menu. No decorative art, no headline number tiles, no count-up animation.
 - Phones from 360 px, no sideways scroll, tap targets ≥ 44 × 44 px; all motion off under `prefers-reduced-motion`.
 - Image ≤ 2 MB and must have `alt`. Photo: round crop only, never the full-size image (FR-19).
 - No date of birth, ID number, home address, phone number or secret anywhere in the repo (constitution 8). Secrets only in GitHub/Vercel secrets (FR-14).

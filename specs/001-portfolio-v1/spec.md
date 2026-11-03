@@ -212,8 +212,14 @@ its Pakistan and global rank.)
     (bright amber is too hard to read on cream), teal `#0F766E`.
   - These colours are a starting point: any pair that fails the WCAG AA contrast check is darkened or lightened
     until it passes.
-- Section titles in code style (`## news`, `## research projects`); site name `~/hamza-atiq`.
-- One calm column, readable text, and a small `proof ↗` / `code ↗` link next to each claim.
+- **Layout (Hamza, 2026-11-03; he rejected the first build's narrow centre column):**
+  - On a laptop the content uses a wide container, about 1,100 px at a 1440 px screen, with side margins of about 170 px. Long reading text keeps a comfortable line length, but sections use the full width.
+  - A fixed top menu: site name `~/hamza-atiq`, links to the sections with the current section marked, a small search button, CV, and the ☀/☾ button.
+  - First screen: name, one line, summary and buttons on the left; round photo on the right. Below them, a row of four key facts (Education, Research, Teaching, Competitions) from `profile.yml`, each linked to its section or proof.
+  - Sections are clearly separated by bands or lines. News is a two-column list (date, then text and link). Interests are a 3-column grid of short cards. Projects are wide rows: image on the left; title, result and links on the right. Teaching is a timeline with role and dates, showing at most 3 video thumbnails per item with "show all" for the rest. Awards are rows with year, text and proof.
+  - Phones stack everything into one column (FR-22 is unchanged).
+- **Type (Hamza, 2026-11-03):** the name and section titles use a classic serif font; body text uses a clean sans-serif font; fonts are served with the site, not from another company's server. This replaces the earlier code-style titles such as `## news`. The site name `~/hamza-atiq` stays in the menu.
+- A small `proof ↗` / `code ↗` link stays next to each claim.
 - **No** decorative art, **no** big headline number tiles, **no** count-up animations. A project's result is shown
   small and plain inside its card and page, together with how it was measured.
 - **Real images only** (constitution rule 7): the photo; one cover image per project (screenshot, diagram or result
@@ -289,6 +295,7 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 
 - [ ] The site opens on a phone (360 px wide) and a laptop with no sideways scrolling.
 - [ ] Sections 1–9 of §4 appear in that order, filled from `content/` files. P-013 has its own page.
+- [ ] At 1440 px the content is at least 1,000 px wide, the top menu is visible after scrolling, and the photo sits to the right of the text. Screenshots at 360, 768 and 1440 px in both modes are compared with the agreed layout by a person, not only by tests.
 - [ ] Every award, news and project link on the site works, or is in `link_check_skip.yml` with a recent check date.
 - [ ] Adding one test news item and pushing makes it appear live within 5 minutes, with no code change.
 - [ ] Pushing a broken file (an empty `summary` on a project, a dead link, an unlisted proof file) is refused with a
@@ -399,3 +406,4 @@ Hamza's answers are recorded in `_portfolio_journey/launch_fixes_decisions.md`.
 5. **Fix 6, findability:** robots, sitemap, Search Console, favicon, custom 404 (FR-28–FR-30).
 6. **Fix 7, database address:** Production only (FR-14).
 7. **Fix 8, new work:** waits until version 1 is live (§10).
+8. **Layout rebuild:** Hamza rejected the first build's look; wide layout, top menu, facts row and serif titles agreed (§6, §11).
