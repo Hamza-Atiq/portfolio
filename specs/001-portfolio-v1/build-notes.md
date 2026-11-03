@@ -23,3 +23,22 @@ Each note: what the step said, what went wrong, what was done.
 7. **Task 7, table set-up.** `sync_db` also runs `checker/schema.sql` (it only uses `create ... if not exists`)
    at the start of each sync, so a new empty Neon database works on the first run. Running it by hand in
    Task 13 is still fine.
+8. **Task 9, Node version.** The plan says Node 20. Node 20 reached its end of life in April 2026, and the
+   newest Vitest (5.0.5) needs Node 22.12 or newer. The site was built and tested with Node 22, and
+   `package.json` says `"engines": {"node": ">=22.12.0"}`. The GitHub Action (Task 13) should use Node 22.
+9. **Task 9, npm install.** `npm install` (npm 10.9) crashed with `Cannot read properties of null (reading
+   'edgesOut')` (an npm bug in its peer-dependency step, set off by Vitest's optional peers). Fix:
+   `site/.npmrc` has `legacy-peer-deps=true` (and `save-exact=true`), and `vite` is listed as a direct dev
+   dependency. `npm ci` uses the same file, so CI behaves the same.
+10. **Task 9, versions.** All npm packages are pinned to the newest stable release from before 2026-10-20 (two
+    weeks before the build): next 16.4.2, react 19.3.1, typescript 7.0.2, vitest 5.0.5, jsdom 30.1.3, and so on.
+    TypeScript 7 works with this Next.js version (build and `tsc --noEmit` pass).
+11. **Task 9, light-mode amber text.** Spec §6 allows changing a colour that fails WCAG AA. Deep amber `#B7791F`
+    on cream `#FAF8F4` has contrast 3.43:1, below the 4.5:1 AA level for normal text. Light mode uses
+    `#9A6516` (4.66:1) for amber **text** (links, tagline, site name, the primary button), and keeps `#B7791F` for
+    borders and the glow (non-text parts need 3:1, which it meets). All other colours pass unchanged.
+12. **Task 9, site name.** The header shows `~/hamza-atiq`. So that page code holds no personal text, it is made
+    from `profile.name` ("Hamza Atiq" → `~/hamza-atiq`).
+13. **Task 9, test data.** `npm run fixture` (in `site/`) makes the test photos and runs the checker on
+    `checker/tests/fixtures/good` with `--skip-network --include-drafts`, as the plan says. Vitest reads the
+    committed copy `site/tests/fixture-content.json` (set in `vitest.config.ts`), never `site/data/content.json`.
