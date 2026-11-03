@@ -13,3 +13,13 @@ Each note: what the step said, what went wrong, what was done.
    and made again by the test setup. To make them by hand: `cd checker && python -m tests.fixture_files`.
 4. **Task 1, `requirements.txt`.** `markdown-it-py` was added, because Task 3 needs a Markdown parser to find
    links in a project body while ignoring code blocks.
+5. **Task 6, award proof file in `content.json`.** The plan says proof ids are resolved to
+   `{"label":"proof","url":"/c/proofs/..."}`. For a project this is its `proofs` list. For an award the
+   resolved link is stored as `proof_file` (and `proof_id` is dropped), so the page can tell the extra proof
+   file (thumbnail) apart from `proof_url` (the CV link).
+6. **Task 6, search index `url`.** The plan does not say where a search result points. Projects point to
+   `/projects/<slug>`; awards, news and teaching point to their section on the main page (`/#awards`,
+   `/#news`, `/#teaching`).
+7. **Task 7, table set-up.** `sync_db` also runs `checker/schema.sql` (it only uses `create ... if not exists`)
+   at the start of each sync, so a new empty Neon database works on the first run. Running it by hand in
+   Task 13 is still fine.
