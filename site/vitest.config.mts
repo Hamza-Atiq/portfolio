@@ -7,8 +7,8 @@ export default defineConfig({
   resolve: {
     alias: [
       // Tests use the committed fixture bundle, never the generated site data.
-      { find: "@/data/content.json", replacement: path.resolve(__dirname, "tests/fixture-content.json") },
-      { find: /^@\//, replacement: path.resolve(__dirname) + "/" },
+      { find: "@/data/content.json", replacement: path.resolve(import.meta.dirname, "tests/fixture-content.json") },
+      { find: /^@\//, replacement: path.resolve(import.meta.dirname) + "/" },
     ],
   },
   test: {
