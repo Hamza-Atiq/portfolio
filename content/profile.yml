@@ -1,0 +1,17 @@
+name: "Hamza Atiq"
+tagline: "// electrical engineer → AI"
+summary: "I am an electrical engineer (BS, University of Wah, 2019) who has been building AI projects since 2024. I have worked as a solar site engineer and as a machine learning engineer, and I now apply machine learning to power-system problems, such as quickly finding which power-line failures could overload a grid. I am looking for a funded MS/PhD position in the USA (Fall 2027) where I can do research where power systems and AI meet."
+photo_dark: { src: photo/hamza_dark.png, alt: "Photo of Hamza Atiq" }
+photo_light: { src: photo/hamza_light.png, alt: "Photo of Hamza Atiq" }
+email: hamzaatiq34@gmail.com
+links:
+  github: https://github.com/Hamza-Atiq
+  linkedin: https://www.linkedin.com/in/hamza-atiq-73952613b/
+  leetcode: https://leetcode.com/u/hamzaatiq34/
+  lablab: https://lablab.ai/u/@Hamza_Atiq
+  devpost: https://devpost.com/hamzaatiq34
+english_test:
+  text: "English: Duolingo English Test 115 (Feb 2026)"
+  url: null
+cv_file: null
+cv_reviewed_by_hamza: 2026-10-24

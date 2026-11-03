@@ -1,0 +1,22 @@
+items:
+  - slug: power-systems
+    label: "Power systems"
+    sentence: "Using fast AI models to help check grid safety, for example N-1 contingency screening (P-013)."
+  - slug: smart-grid
+    label: "Smart grid"
+    sentence: "Forecasting solar power and load, so that a grid with a lot of solar stays stable."
+  - slug: embedded-systems
+    label: "Embedded systems"
+    sentence: "Running useful models on small, low-power devices."
+  - slug: robotics
+    label: "Robotics"
+    sentence: "Control and simulation of robots."
+  - slug: batteries-evs
+    label: "Batteries & EVs"
+    sentence: "Predicting battery health and smart charging."
+  - slug: tinyml
+    label: "TinyML"
+    sentence: "Machine learning on microcontrollers with very little memory."
+  - slug: wireless
+    label: "Wireless"
+    sentence: "Using machine learning for wireless communication."

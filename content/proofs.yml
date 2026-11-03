@@ -1,0 +1,8 @@
+- id: calico-certificate
+  file: proofs/berkeley_calico_spring26_team_eagle3.jpeg
+  note: "CALICO Spring 2026 certificate, team Eagle 3. Shows the global and Pakistan ranks. Opened 2026-11-03: no private data."
+  private_info_checked: true
+- id: giki-leaderboard
+  file: proofs/giki_kaggle_leaderboard_rank10.png
+  note: "Kaggle leaderboard screenshot. Shows rank 10, Hamza Atique. Opened 2026-11-03: no private data."
+  private_info_checked: true
