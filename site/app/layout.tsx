@@ -2,15 +2,15 @@ import type { Metadata, Viewport } from "next";
 import Link from "next/link";
 import ThemeToggle from "@/components/ThemeToggle";
 import { getBundle, siteName } from "@/lib/content";
+import { rootMetadata } from "@/lib/seo";
 import { THEME_SCRIPT } from "@/lib/theme-script";
 import "./globals.css";
 
 const bundle = getBundle();
 
-export const metadata: Metadata = {
-  title: bundle.profile.name,
-  description: bundle.profile.tagline,
-};
+export function generateMetadata(): Metadata {
+  return rootMetadata(bundle);
+}
 
 export const viewport: Viewport = {
   width: "device-width",
