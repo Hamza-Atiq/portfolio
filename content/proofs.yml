@@ -1,3 +1,7 @@
+- id: cv
+  file: cv/Hamza_Atiq_CV.pdf
+  note: "Exported from Hamza's Google Doc on 2026-11-03. It shows his phone number; Hamza chose on 2026-11-03 to publish it as it is (constitution rule 8 exception)."
+  private_info_checked: true
 - id: calico-certificate
   file: proofs/berkeley_calico_spring26_team_eagle3.jpeg
   note: "CALICO Spring 2026 certificate, team Eagle 3. Shows the global and Pakistan ranks. Opened 2026-11-03: no private data."
