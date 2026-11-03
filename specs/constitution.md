@@ -4,7 +4,8 @@ These rules apply to every spec, every plan and every change. If a change breaks
 
 1. **Only true, provable claims.** Every award, rank, number or role on the site has a proof link
    (certificate, leaderboard, official page) or a code link. No proof → it does not go on the site.
-   Team work always says "team of N" and what Hamza himself did.
+   Team work is shown as team work: it says "team of N", and the team built it and got the rank.
+   It never claims the team's result as Hamza's alone. (Hamza's decision, 2026-11-01.)
 2. **Only finished, checked work is published.** A project appears only after it has been reviewed,
    improved where needed, and approved by Hamza (`reviewed_by_hamza` date).
 3. **Content is data, not code.** Adding, changing or removing anything means editing one small

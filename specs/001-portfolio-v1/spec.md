@@ -1,7 +1,7 @@
 # Spec 001: Portfolio website, version 1
 
-- **Status:** v4, **APPROVED by Hamza 2026-10-24** ("start next work"). Changes: §15, §16, §17
-- **Date:** 2026-10-18 (v4: 2026-10-24)
+- **Status:** v5. v4 approved by Hamza 2026-10-24; launch fixes 1–8 answered 2026-11-01 and 2026-11-03 ("yes to all"). Changes: §15–§18
+- **Date:** 2026-10-18 (v5: 2026-11-03)
 - **Owner:** Hamza Atiq decides · Claude builds
 - **Rules:** follows `specs/constitution.md`
 - **Method:** spec-driven development from the Agent Factory book (`spec-driven-development-crash-course`):
@@ -61,27 +61,29 @@ One main page with these sections, **in this order**, plus one page per project:
 | 9 | **CV & Contact** | Download CV (PDF), email, GitHub, LinkedIn, LeetCode, lablab, Devpost | `profile.yml` + CV file |
 
 - A section with no published items is hidden, **except** section 5 in v1 (it shows its one line).
-- **Project page:** title, tags, date, solo or "team of N", my role, summary, the problem, the method,
-  results with how they were measured, limits, images, links (code, live demo, video, proof).
+- **Project page:** title, tags, date, solo or "team of N", my role (only if the file gives one), summary, the
+  problem, the method, results with how they were measured, limits, images, links (code, live demo, video, proof).
 - **Filter chips** above a project section appear only when that section has 4 or more projects
   (with 1 project, chips would look empty).
 
 ### 4.1 Awards allowed in v1
 
-All are proven in `_portfolio_journey/cv_review_2026-10-17.md` §6 and `_portfolio_journey/proofs/`.
+**Proof rule (Hamza, 2026-11-01):** the site uses **the same proof links as the CV**: a certificate link if the event
+gives one, otherwise the LinkedIn post. A LinkedIn post is valid proof. The exact links are in
+`_portfolio_journey/cv_review_2026-10-17.md` §7. Hamza is not asked for extra screenshots or other proof.
 The exact wording and proof link of each go in `awards.yml`, and Hamza approves each one.
 
-| Award (wording to use) | Proof |
+| Award (wording to use) | Proof (same link as the CV) |
 |---|---|
 | UCLA CodeSprint LA 2026: team of 3, rank 15 of 244 | LinkedIn post |
-| BlueQubit × Yale Peaked Hackathon 2026: rank 53 of 549 | LinkedIn post (a leaderboard screenshot is preferred) |
-| Berkeley CALICO Spring 2026: team of 3, Bronze Brick Award (Pakistan #32 of 78); global #269 of 375 | Certificate |
-| Harvard CS50x Puzzle Day 2025: team solved all 9 of 9 puzzles | CS50 certificate |
-| AMD Developer Hackathon 2026: Finalist, team of 3 (my part: training data and testing on AMD GPUs) | lablab certificate + team page |
-| Solar Production and Load Prediction (Kaggle, GIKI DNN Bootcamp 2024): 10th place | Kaggle leaderboard screenshot |
-| Meta Hacker Cup 2025, Round 1: 7,798th | Certificate |
+| BlueQubit × Yale Peaked Hackathon 2026: rank 53 of 549 | LinkedIn post |
+| Berkeley CALICO Spring 2026: team of 3, Bronze Brick Award (Pakistan #32 of 78); global #269 of 375 | LinkedIn post + certificate file already in `proofs/` (shows the global rank) |
+| Harvard CS50x Puzzle Day 2025: team solved all 9 of 9 puzzles | Google Drive certificate folder |
+| AMD Developer Hackathon 2026: Finalist, team of 3 | lablab team page |
+| Solar Production and Load Prediction (Kaggle, GIKI DNN Bootcamp 2024): 10th place | Google Drive file + leaderboard screenshot already in `proofs/` (shows 10th place) |
+| Meta Hacker Cup 2025, Round 1: 7,798th | Google Drive certificate |
 | M(IT)² coding competition 2025, Round 1: rank 482 of 559 | LinkedIn post |
-| HackerRank Orchestrate (May 2026): rank 427 of 1,349 | LinkedIn post + screenshot |
+| HackerRank Orchestrate (May 2026): rank 427 of 1,349 | LinkedIn post |
 
 **Never on the site** (no proof): "Winner", "1st place Hugging Face prize", CS50x Puzzle Day 2026 "10/10",
 NeuroOceans "40% less time", GIKI "of 55" (until the total is shown in a screenshot).
@@ -126,21 +128,23 @@ its Pakistan and global rank.)
 - **FR-4** Every published item has `reviewed_by_hamza: YYYY-MM-DD` (the date Hamza read and approved it). For
   `profile.yml`, `interests.yml` and `skills.yml`, one date for the whole file is enough.
 - **FR-5** Items are shown newest first. An optional `pin: 1`, `pin: 2`, … puts items on top in that order.
-- **FR-6** A project's `team` is either `solo` or `team of N` (N = 2 or more). For a team project, `my_role` must say
-  what Hamza himself did.
+- **FR-6** A project's `team` is either `solo` or `team of N` (N = 2 or more). `my_role` is optional for every project.
+  Team work is shown as team work: no "what Hamza did" line is required (Hamza, 2026-11-01).
 
 **Checker ("the robot", Python, runs on GitHub Actions)**
 - **FR-7** It runs (a) on every push, (b) once a day by itself, and (c) when Hamza presses "Run workflow" on GitHub.
 - **FR-8** It checks:
   - every file has the right fields and types, valid dates, and no empty required text;
-  - no two items share the same `slug`;
-  - FR-6 rules for team projects;
+  - no two items of the same kind share a `slug`;
+  - a project's `team` has the FR-6 form;
   - every link works: a web request answers with status below 400 (3 tries). Sites that block robots
-    (for example LinkedIn) are listed in `content/link_check_skip.yml`; their links are checked by hand by Hamza,
-    and each one in the list has a `checked_by_hamza` date;
+    (for example LinkedIn) are listed by exact address in `content/link_check_skip.yml`; their links are checked by hand
+    by Hamza, and each one in the list has a `checked_by_hamza` date before the site goes public;
   - every proof file used is listed in `content/proofs.yml` with `private_info_checked: true`;
   - every image has `alt` text and is at most 2 MB;
-  - no secret keys or passwords anywhere in the repo.
+  - no secret keys or passwords anywhere in the repo;
+  - every file path in a content file stays inside `content/`, and every `slug` is safe, so no other file on the machine
+    can be copied to the public site. Projects pulled from other repos pass the same image and path checks.
 - **FR-9** If anything fails: stop, print the file and the problem in simple words, and do not deploy.
   The live site stays the same.
 - **FR-10** If everything passes: (1) write the data to the Neon Postgres database (add, update, and delete items
@@ -154,7 +158,15 @@ its Pakistan and global rank.)
   can skip the checks. A push to `main` makes a public (production) deploy without drafts. A push to `preview` makes a
   private preview deploy that includes drafts; it never changes the public site or the database.
 - **FR-14** Secret values (Vercel token, database address) are stored as GitHub Actions secrets and Vercel environment
-  variables, never in files.
+  variables, never in files. The database address is given to **Production only**, never to Preview: during the Neon
+  setup the Preview option is unticked, and this is checked afterwards.
+- **FR-26** Warnings reach Hamza. When a daily or `main` run ends with a warning or a failure, the Action opens one
+  GitHub issue named "Site check needs attention", assigned to Hamza so that GitHub notifies him. It lists each
+  checker problem in simple words, and each failed step (such as the deploy step) with a link to that run's log. If that issue is already open, the Action updates it instead of opening another. When a later
+  daily or `main` run is clean, the Action closes it. `preview` runs never open issues.
+- **FR-27** The daily check never stops by itself. GitHub turns off scheduled workflows in a public repo after 60 days
+  with no repo activity. So on each daily run, if the newest commit on `main` is 50 or more days old, the Action makes
+  one small commit to `.github/keepalive.txt`. This commit does not start a new run or a deploy.
 
 **Website (Next.js on Vercel)**
 - **FR-15** Pages are built from the checked files at deploy time. Showing a page never needs the database.
@@ -181,6 +193,13 @@ its Pakistan and global rank.)
   from Hamza's Google Doc "Hamza CV EE" and saved in the repo. **Hamza confirmed on 2026-10-24 that the CV is
   correct**, so `cv_reviewed_by_hamza: 2026-10-24`. The CV is Hamza's own document; Claude does not edit or re-check it.
 - **FR-25** The email address is shown so people can copy it and as a "mailto" link; it is not hidden behind a form.
+- **FR-28** Search engines can find the public site. It has `robots.txt` (allow all, and name the sitemap) and
+  `sitemap.xml` (the main page and every published project page). The site is added to Google Search Console and the
+  sitemap is submitted. A build that includes drafts (the `preview` branch) tells search engines not to list it.
+- **FR-29** The site has a small favicon: an amber `~` on graphite, matching the site name `~/hamza-atiq`. This is the
+  site's mark, not decoration, so constitution rule 7 is not broken.
+- **FR-30** A wrong address shows a custom "page not found" page in the same style, with a link back to the main page,
+  and answers with status 404.
 
 ## 6. Look and feel (agreed in the browser sessions, 2026-10-18)
 
@@ -231,7 +250,7 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 
 ## 8. Where things live
 
-- Code and content: `D:\AI Journey\portfolio` (git) → GitHub repo `Hamza-Atiq/portfolio` (public) → Vercel.
+- Code and content: `D:\AI Journey\portfolio` (git) → GitHub repo `Hamza-Atiq/portfolio` (private during the build, public from plan Task 13, with Hamza's OK) → Vercel.
 - Address: `hamza-atiq.vercel.app` if that name is free on Vercel; otherwise the closest free name, chosen with
   Hamza. A custom domain can be added later with no other change.
 - Database: Neon Postgres, free plan, added to the Vercel project.
@@ -246,6 +265,7 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 | Database asleep (Neon sleeps after a few idle minutes) | First search may take about 1 second longer; pages are not affected |
 | Database down | Pages are not affected; search uses the built-in copy (FR-17); the checker warns (FR-11) |
 | A source repo becomes private, is deleted or renamed | That project is skipped with a warning; the rest deploys |
+| A source repo has a bad `portfolio.yml`, or GitHub is briefly down | Error: nothing deploys and the old site keeps the project (FR-9) |
 | Two items with the same `slug` | Error, nothing deploys |
 | A published project has no image | Allowed: it shows a plain text card (no fake image) |
 | Very long summary | The card shows 3 lines and "read more" |
@@ -259,6 +279,8 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 - Custom domain.
 - Login page or admin panel (never: editing only through git).
 - Hackathon project cards (added one by one after each project is reviewed and finished).
+- New work found on 2026-11-01: `hackerrank-orchestrate-october26` and `OSI Hackathon` (not audited yet) and P-14
+  Bearing Whisperer (live). They wait until version 1 is live, then each is checked and added one by one.
 - Showing visitor numbers on the site.
 
 ## 11. Acceptance criteria (version 1 is done when all are true)
@@ -267,8 +289,13 @@ Other files in `content/`: `profile.yml`, `news.yml`, `interests.yml`, `teaching
 - [ ] Sections 1–9 of §4 appear in that order, filled from `content/` files. P-013 has its own page.
 - [ ] Every award, news and project link on the site works, or is in `link_check_skip.yml` with a recent check date.
 - [ ] Adding one test news item and pushing makes it appear live within 5 minutes, with no code change.
-- [ ] Pushing a broken file (empty `my_role` on a team project, a dead link, an unlisted proof file) is refused with a
+- [ ] Pushing a broken file (an empty `summary` on a project, a dead link, an unlisted proof file) is refused with a
       clear message, and the live site does not change.
+- [ ] A warning on a daily run opens one GitHub issue assigned to Hamza; a clean run closes it (FR-26).
+- [ ] The 50-day keepalive commit logic is tested, and that commit starts no run or deploy (FR-27).
+- [ ] `robots.txt` and `sitemap.xml` are correct on the public site, the sitemap is submitted to Google Search Console,
+      the favicon shows, and a wrong address shows the custom page with status 404 (FR-28–FR-30).
+- [ ] The database address exists in Vercel's Production only, not in Preview (FR-14).
 - [ ] An item with `status: draft` is not on the public site, but is visible on the `preview` branch link.
 - [ ] A device set to light opens the site in light mode and a device set to dark opens it in dark mode, with no
       flash of the wrong mode. The ☀/☾ button works, the photo changes with the mode, and the choice is remembered
@@ -356,3 +383,17 @@ All questions are answered; the decisions are in §12.
 1. **Spec approved** by Hamza ("start next work"). Next step: `plan.md`.
 2. **CV:** Hamza confirmed it is correct; FR-24 date set to 2026-10-24; the old CV fix list in §13 is removed.
 3. **§13 closed:** About draft used as written; Duolingo link is an optional field, not a blocker.
+
+## 18. Changes from v4 → v5 (launch fixes, 2026-11-01 and 2026-11-03)
+
+Hamza's answers are recorded in `_portfolio_journey/launch_fixes_decisions.md`.
+
+1. **Fixes 1–2, proofs:** same links as the CV; a LinkedIn post is valid proof; no extra screenshots (§4.1).
+2. **Fix 3, team work:** shown as team work, with no "what Hamza did" line; `my_role` optional; AMD line shortened
+   (constitution rule 1, FR-6, §4, §4.1, §11).
+3. **Fix 4, warnings:** one GitHub issue assigned to Hamza (FR-26).
+4. **Fix 5, 60-day stop:** a small commit when `main` is 50 days quiet (FR-27). A web search found the commit method
+   widely used, and found no proof that re-enabling through the API resets the 60-day timer.
+5. **Fix 6, findability:** robots, sitemap, Search Console, favicon, custom 404 (FR-28–FR-30).
+6. **Fix 7, database address:** Production only (FR-14).
+7. **Fix 8, new work:** waits until version 1 is live (§10).
