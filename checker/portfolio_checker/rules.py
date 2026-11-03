@@ -11,6 +11,8 @@ from .models import Content, Image, Report
 MAX_IMAGE_BYTES = 2 * 1024 * 1024
 SKIP_LINK_MAX_DAYS = 90
 SOURCE_PREFIX = "/c/sources/"
+# The ids of the main page's sections (spec §4); a fact may link to one of them.
+SECTION_IDS = {"about", "news", "interests", "research", "hackathons", "teaching", "awards", "skills", "contact"}
 IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif"}
 
 
@@ -122,6 +124,12 @@ def check_rules(content: Content, root: Path, today: date, include_drafts: bool)
     for p in content.projects:
         for img in ([p.cover] if p.cover else []) + list(p.images):
             _check_image(img, root, report, p.file)
+
+    # facts row: a "#section" link must name a real section
+    for i, fact in enumerate(prof.facts, start=1):
+        if fact.link and fact.link.startswith("#") and fact.link[1:] not in SECTION_IDS:
+            report.error("content/profile.yml", f'facts[{i}].link "{fact.link}" is not a section of the page; '
+                         f"use one of: {', '.join('#' + s for s in sorted(SECTION_IDS))}")
 
     # 5. CV
     if prof.cv_file:

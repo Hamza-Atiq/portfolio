@@ -18,6 +18,8 @@ from pydantic import (
     StrictBool,
     StrictInt,
     StrictStr,
+    TypeAdapter,
+    ValidationError,
 )
 
 # --------------------------------------------------------------------------- report
@@ -151,6 +153,32 @@ class Image(Strict):
     alt: Annotated[Text, Field(min_length=3)]
 
 
+ANCHOR_RE = re.compile(r"^#[a-z0-9][a-z0-9-]*$")
+_HTTP_URL = TypeAdapter(HttpUrl)
+
+
+def _fact_link(v: str) -> str:
+    """A link to a section of the main page (`#research`) or a web address (a proof)."""
+    if ANCHOR_RE.match(v):
+        return v
+    try:
+        return str(_HTTP_URL.validate_python(v))
+    except ValidationError:
+        raise ValueError(f'"{v}" must be a section such as "#research" or a web address starting with https://')
+
+
+FactLink = Annotated[StrictStr, AfterValidator(_fact_link)]
+
+
+class Fact(Strict):
+    """One item of the facts row under the About text (spec §6)."""
+
+    label: Text
+    title: Text
+    detail: Text | None = None
+    link: FactLink | None = None
+
+
 class EnglishTest(Strict):
     text: Text
     url: HttpUrl | None = None
@@ -165,6 +193,7 @@ class Profile(Strict):
     email: EmailStr
     links: dict[Literal["github", "linkedin", "leetcode", "lablab", "devpost"], HttpUrl]
     english_test: EnglishTest
+    facts: list[Fact] = []
     cv_file: SafePath | None = None
     cv_reviewed_by_hamza: Day | None = None
     reviewed_by_hamza: Day | None = None

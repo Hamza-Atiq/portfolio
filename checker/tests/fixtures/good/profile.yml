@@ -13,6 +13,21 @@ links:
 english_test:
   text: "English: test score 100 (Jan 2026)"
   url: https://example.com/english-test
+facts:
+  - label: "Education"
+    title: "Test degree"
+    detail: "Test university, 2019"
+  - label: "Research"
+    title: "Test research area"
+    link: "#research"
+  - label: "Teaching"
+    title: "Test instructor"
+    detail: "Test sessions"
+    link: "#teaching"
+  - label: "Competitions"
+    title: "Test Contest 2026"
+    detail: "Team of 3, rank 1 of 10"
+    link: https://example.com/proof/test-award
 cv_file: cv/test_cv.pdf
 cv_reviewed_by_hamza: 2026-10-24
 reviewed_by_hamza: 2026-10-24

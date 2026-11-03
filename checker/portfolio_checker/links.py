@@ -56,6 +56,7 @@ def all_links(content: Content) -> list[tuple[str, str]]:
     out: list[tuple[str, str]] = []
     prof = "content/profile.yml"
     out += [(prof, str(u)) for u in content.profile.links.values()]
+    out += [(prof, f.link) for f in content.profile.facts if f.link and not f.link.startswith("#")]
     if content.profile.english_test.url:
         out.append((prof, str(content.profile.english_test.url)))
     out += [("content/news.yml", str(n.link.url)) for n in content.news]
