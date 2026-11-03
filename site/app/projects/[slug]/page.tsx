@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Footer from "@/components/Footer";
 import ProjectPage from "@/components/ProjectPage";
+import TopBar from "@/components/TopBar";
 import { getBundle, getProject } from "@/lib/content";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -35,5 +37,14 @@ export default async function Page({ params }: Props) {
   const { slug } = await params;
   const project = getProject(slug);
   if (!project) notFound();
-  return <ProjectPage project={project} />;
+  const bundle = getBundle();
+  return (
+    <>
+      <TopBar bundle={bundle} home={false} />
+      <main id="main">
+        <ProjectPage project={project} />
+      </main>
+      <Footer profile={bundle.profile} />
+    </>
+  );
 }

@@ -44,17 +44,20 @@ export default function SearchBox({ index }: { index: SearchEntry[] }) {
       <input
         id={id}
         type="search"
+        autoFocus
         value={q}
         maxLength={100}
         autoComplete="off"
         onChange={(e) => setQ(e.target.value)}
       />
       {results !== null && (
-        <ul className="plain-list small" aria-live="polite" data-search-results>
+        <ul className="search-results" aria-live="polite" data-search-results>
           {results.length === 0 && <li className="muted">Nothing found.</li>}
           {results.map((r) => (
             <li key={`${r.kind}-${r.slug}`}>
-              <span className="tag">{KIND[r.kind]}</span> <a href={r.url}>{r.title}</a>
+              <a href={r.url}>
+                <span className="tag">{KIND[r.kind]}</span> {r.title}
+              </a>
             </li>
           ))}
         </ul>

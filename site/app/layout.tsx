@@ -1,9 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import Link from "next/link";
-import ThemeToggle from "@/components/ThemeToggle";
-import { getBundle, siteName } from "@/lib/content";
+import { getBundle } from "@/lib/content";
 import { rootMetadata } from "@/lib/seo";
 import { THEME_SCRIPT } from "@/lib/theme-script";
+import { sans, serif } from "./fonts";
 import "./globals.css";
 
 const bundle = getBundle();
@@ -21,25 +20,18 @@ export const viewport: Viewport = {
   ],
 };
 
+/** Each page renders its own TopBar (it needs to know whether it is the main page) and <main>. */
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={`${serif.variable} ${sans.variable}`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
       </head>
-      <body>
+      <body id="top">
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <header className="site-header">
-          <Link href="/" className="site-name">
-            {siteName(bundle.profile)}
-          </Link>
-          <ThemeToggle />
-        </header>
-        <main id="main" className="page">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );

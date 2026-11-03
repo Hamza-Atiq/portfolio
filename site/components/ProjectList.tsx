@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ProjectCard from "@/components/ProjectCard";
+import ProjectRow from "@/components/ProjectRow";
 import type { Project } from "@/lib/content";
 
 const CHIPS_FROM = 4;
@@ -26,9 +26,9 @@ export default function ProjectList({ projects }: { projects: Project[] }) {
           ))}
         </div>
       )}
-      <div className="cards">
+      <div className="project-list">
         {shown.map((p) => (
-          <ProjectCard key={p.slug} project={p} />
+          <ProjectRow key={p.slug} project={p} />
         ))}
       </div>
     </>

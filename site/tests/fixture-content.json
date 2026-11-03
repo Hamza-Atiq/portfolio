@@ -30,8 +30,8 @@
    }
   ]
  },
- "generated_at": "2026-11-03T15:06:46Z",
- "hash": "af3c4ac127f9af6d51108601d6c2b56b800fa76402cc99a485dd6bc4f8198159",
+ "generated_at": "2026-11-03T18:34:06Z",
+ "hash": "ca638e18d29fb1e0a62a6f9d5573b4d05972fdda0a8fe9abaa210f25a8b14dc8",
  "include_drafts": true,
  "interests": [
   {
@@ -91,6 +91,32 @@
    "text": "English: test score 100 (Jan 2026)",
    "url": "https://example.com/english-test"
   },
+  "facts": [
+   {
+    "detail": "Test university, 2019",
+    "label": "Education",
+    "link": null,
+    "title": "Test degree"
+   },
+   {
+    "detail": null,
+    "label": "Research",
+    "link": "#research",
+    "title": "Test research area"
+   },
+   {
+    "detail": "Test sessions",
+    "label": "Teaching",
+    "link": "#teaching",
+    "title": "Test instructor"
+   },
+   {
+    "detail": "Team of 3, rank 1 of 10",
+    "label": "Competitions",
+    "link": "https://example.com/proof/test-award",
+    "title": "Test Contest 2026"
+   }
+  ],
   "links": {
    "devpost": "https://example.com/devpost/test-person",
    "github": "https://github.com/test-person",

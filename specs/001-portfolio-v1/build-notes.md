@@ -141,3 +141,68 @@ page should have a results table, either write results as a list (no change), or
     error on push and warning on daily. Tests: `test_head_ok_alone_is_not_enough`,
     `test_get_does_not_download_the_body`; `test_ok_link_passes` and `test_gives_up_after_three_tries` now count
     GET requests.
+
+## Layout rebuild (cloud-build-prompt-3: spec §6 wide layout, top menu, facts row, serif titles)
+
+26. **Facts row as data.** `profile.yml` has an optional `facts` list (`label`, `title`, optional `detail`, optional
+    `link`). A link is either a section of the main page (`#research`) or a web address. The checker refuses any
+    other form, refuses a `#section` that does not exist, and link-checks web addresses. The four facts were added to
+    `content/profile.yml` with exactly the wording given. Research has no `detail` (none was given), so `detail` is
+    optional. **For Hamza's review:** the Education fact says "CGPA 3.51" with no proof link (constitution rule 1);
+    he may want to link it to a transcript or drop the number. Tests: `checker/tests/test_facts.py` (6 tests).
+27. **Reference site and design skill not reachable.** `https://ayeshaandleeb.github.io/` could not be opened from
+    the cloud sandbox (no connection), and no frontend-design skill was available. The layout follows spec §6 word
+    by word instead: wide container (1,100 px of content at 1440 px, margins 170 px), sticky top menu with the
+    current section marked, name, line, summary and buttons left with the round photo right, a row of four facts,
+    sections in alternating bands, a two-column news list, a 3-column interests grid, wide project rows (image left;
+    title, result and links right), a teaching timeline (3 videos, then "show all"), award rows (year, text, proof).
+    Phones stack everything into one column.
+28. **Fonts.** Source Serif 4 (name, section titles, project titles) and Inter (body text), both variable fonts,
+    Latin subset, from the `@fontsource-variable` packages (5.3.1 and 5.3.0), copied into `site/app/fonts/` with
+    their SIL Open Font License files and served by `next/font/local`. No request goes to another company's
+    server. Text the fonts do not cover (for example `→`) falls back to the system font.
+29. **Search in the menu.** The search box is now a small search button in the top menu that opens a dialog
+    (FR-17 unchanged: `/api/search`, 2-second fallback, browser fallback). The search code loads only when the
+    dialog is first opened. In a search field the first Escape clears the text (browser default) and the second one
+    closes the box.
+30. **Menu on small screens.** Below 980 px the section links open from a "Menu" button. Below 560 px the
+    menu's CV button is hidden to make room; the CV button is still in the first screen and in Contact.
+31. **Speed: why `priority` did not help (Next 16).** In Next.js 16 `priority` is deprecated in favour of
+    `preload`, and it no longer sets `fetchpriority="high"` on the image (checked in
+    `next/dist/shared/lib/get-img-props.js` and the Next 16 docs for `<Image>`, which say to use `loading="eager"`
+    or `fetchPriority="high"` instead). So Lighthouse saw the cover as "not high priority". The project cover and
+    the photo now use `loading="eager"` and `fetchPriority="high"`; Lighthouse's LCP check now reports
+    "fetchpriority=high applied", "discoverable in initial document" and "not lazy".
+32. **Lighthouse (mobile, local `next start`, real content with drafts, median of 3 runs).** Project page:
+    Performance 96, Accessibility 100, LCP 2.6 s, Total Blocking Time 120 ms, CLS 0. Main page: Performance 94,
+    Accessibility 100, LCP 2.3 s, TBT 150 ms, CLS 0. JavaScript: 135 KB, almost all of it the Next.js/React
+    runtime. The project page's LCP median (2.6 s) is just above the 2.5 s target (spec §14); single runs ranged
+    2.0–2.7 s. A sandbox differs from production: CPU speed varies (an earlier run before the fixes showed 770 ms of
+    blocking time), there is no CDN, and Vercel's image service differs from the local one. Run Lighthouse again on
+    the live site (plan Task 14).
+33. **Contrast.** Lighthouse found light-mode amber text (`#9A6516`) at 4.18–4.37:1 on the new band and result-box
+    backgrounds (WCAG AA needs 4.5:1). Light-mode amber text is now `#8A5A12` (at least 4.7:1 on every light
+    background, 5.57:1 for the button text). Spec §6 allows this.
+34. **Tests.** New unit tests in `site/tests/layout.test.tsx` (facts row, project rows, teaching "show all",
+    top menu, Menu button, search button). New e2e tests at 1440 px: content width ≥ 1,000 px, menu visible after
+    scrolling, current section marked, photo right of the summary, sections in order, facts in one row, project
+    image left of its text, filter chips, search button; and at 360 px the Menu button. All older tests still run
+    (360 px no sideways scroll, tap targets, now also the menu links and icon buttons). A filled sample with 5
+    projects (`checker/tests/fixtures/filled`, `npm run fixture:filled`) checks the filter chips and rows.
+35. **A local cache trap (not a site bug).** After building the test fixture and then the real content, the local
+    image optimizer kept serving the tiny test cover for the same address (`/c/images/p013/cover.png`), which
+    showed as an amber block. Deleting `site/.next/cache/images` fixed it. Vercel builds start with a fresh cache.
+
+### What changed after looking at the screenshots
+
+- Round 1: a "Menu" button showed at 1440 px (CSS order) → hidden on wide screens. The project cover grew wider
+  than its column → fixed size; and covers are screenshots, so they are shown whole (`contain`), never cropped
+  through text. Empty video boxes → a play mark on each, so they read as videos while the picture loads.
+- Round 2: the Skills cards looked empty ("Programming" has one item) → rows like News and Awards. The single
+  Hackathon line sat in a tall empty band → a compact band. The timeline's date column pushed it too far right →
+  narrower. The project page cover sat high with empty space under it → centred beside the text.
+- Round 3: filter chips touched the first row → spacing. At 1024 px there was room for the full menu → the
+  Menu button now starts below 980 px. The menu marked "Skills" at the very bottom → the last section is marked
+  at the bottom (found by an e2e test). Amber text contrast on the new bands → darker amber (note 33).
+- Left as is: the 7th interest card sits alone on its row (3 columns, 7 interests); the P-013 cover is a wide
+  screenshot, so its row has some empty space above and below the picture.

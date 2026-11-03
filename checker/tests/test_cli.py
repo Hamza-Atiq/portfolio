@@ -79,3 +79,17 @@ def test_secret_in_repo_stops_build(tmp_path, capsys):
     (tmp_path / "notes.txt").write_text("key " + "gh" + "p_" + "a" * 36 + "\n")
     assert main(_args(root, tmp_path / "site", tmp_path)) == 1
     assert "ERROR notes.txt:" in capsys.readouterr().out
+
+
+def test_filled_sample_builds_with_five_projects(tmp_path):
+    import json
+
+    from tests.fixture_files import make_filled
+
+    root = make_filled(tmp_path / "content")
+    site = tmp_path / "site"
+    assert main(_args(root, site, tmp_path)) == 0
+    data = json.loads((site / "data" / "content.json").read_text(encoding="utf-8"))
+    kinds = [p["kind"] for p in data["projects"]]
+    assert len(kinds) == 5 and kinds.count("research") == 4
+    assert any(p["cover"] is None for p in data["projects"])

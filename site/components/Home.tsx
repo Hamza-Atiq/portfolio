@@ -4,8 +4,7 @@ import Contact from "@/components/Contact";
 import Interests from "@/components/Interests";
 import News from "@/components/News";
 import ProjectList from "@/components/ProjectList";
-import SearchBox from "@/components/SearchBox";
-import SectionTitle from "@/components/SectionTitle";
+import Section from "@/components/Section";
 import Skills from "@/components/Skills";
 import Teaching from "@/components/Teaching";
 import type { Bundle } from "@/lib/content";
@@ -17,23 +16,20 @@ export default function Home({ bundle }: { bundle: Bundle }) {
   return (
     <>
       <About profile={bundle.profile} interests={bundle.interests} />
-      <SearchBox index={bundle.search_index} />
       <News items={bundle.news} />
       <Interests items={bundle.interests} />
       {research.length > 0 && (
-        <section id="research" aria-labelledby="research-title">
-          <SectionTitle id="research">research projects</SectionTitle>
+        <Section id="research" title="Research projects">
           <ProjectList projects={research} />
-        </section>
+        </Section>
       )}
-      <section id="hackathons" aria-labelledby="hackathons-title">
-        <SectionTitle id="hackathons">hackathon projects</SectionTitle>
+      <Section id="hackathons" title="Hackathon projects" compact={hackathons.length === 0}>
         {hackathons.length > 0 ? (
           <ProjectList projects={hackathons} />
         ) : (
-          <p className="muted">Hackathon projects are added one by one after review.</p>
+          <p className="muted empty-note">Hackathon projects are added one by one after review.</p>
         )}
-      </section>
+      </Section>
       <Teaching items={bundle.teaching} />
       <Awards main={bundle.awards.main} other={bundle.awards.other} />
       <Skills groups={bundle.skills} />

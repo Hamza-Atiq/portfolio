@@ -25,7 +25,7 @@ export default function ThemeToggle() {
 
   const label = theme === "light" ? "Switch to dark mode" : "Switch to light mode";
   return (
-    <button type="button" className="theme-toggle" onClick={toggle} aria-label={label} title={label}>
+    <button type="button" className="icon-button theme-toggle" onClick={toggle} aria-label={label} title={label}>
       <span aria-hidden="true" className="icon-light">☀</span>
       <span aria-hidden="true" className="icon-dark">☾</span>
     </button>

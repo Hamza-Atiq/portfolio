@@ -17,6 +17,13 @@ export interface Image {
   alt: string;
 }
 
+export interface Fact {
+  label: string;
+  title: string;
+  detail: string | null;
+  link: string | null;
+}
+
 export interface Profile {
   name: string;
   tagline: string;
@@ -26,6 +33,7 @@ export interface Profile {
   email: string;
   links: Partial<Record<"github" | "linkedin" | "leetcode" | "lablab" | "devpost", string>>;
   english_test: { text: string; url: string | null };
+  facts?: Fact[];
   cv_file: string | null;
   cv_reviewed_by_hamza: string | null;
   reviewed_by_hamza: string | null;

@@ -1,19 +1,19 @@
-import SectionTitle from "@/components/SectionTitle";
+import Section from "@/components/Section";
 import type { Interest } from "@/lib/content";
 
+/** Research interests: a 3-column grid of short cards (spec §6). */
 export default function Interests({ items }: { items: Interest[] }) {
   if (items.length === 0) return null;
   return (
-    <section id="interests" aria-labelledby="interests-title">
-      <SectionTitle id="interests">research interests</SectionTitle>
-      <ul className="plain-list">
+    <Section id="interests" title="Research interests">
+      <ul className="interest-grid">
         {items.map((i) => (
-          <li key={i.slug} id={`interest-${i.slug}`}>
-            <strong>{i.label}</strong>
-            <span className="muted">: {i.sentence}</span>
+          <li key={i.slug} id={`interest-${i.slug}`} className="interest-card">
+            <h3>{i.label}</h3>
+            <p>{i.sentence}</p>
           </li>
         ))}
       </ul>
-    </section>
+    </Section>
   );
 }

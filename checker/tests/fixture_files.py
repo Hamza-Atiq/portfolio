@@ -41,6 +41,27 @@ def ensure_fixture_files(root: Path = GOOD) -> None:
             path.write_bytes(data)
 
 
+FILLED = GOOD.parent / "filled"
+
+
+def make_filled(dest: Path) -> Path:
+    """The `good` fixture plus the extra projects in `fixtures/filled` (5 projects), copied to `dest`."""
+    import shutil
+
+    ensure_fixture_files(GOOD)
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(GOOD, dest)
+    for f in (FILLED / "projects").glob("*.md"):
+        shutil.copy(f, dest / "projects" / f.name)
+    return dest
+
+
 if __name__ == "__main__":
-    ensure_fixture_files()
-    print(f"made test files in {GOOD}")
+    import sys
+
+    if len(sys.argv) > 2 and sys.argv[1] == "filled":
+        print(f"made the filled sample in {make_filled(Path(sys.argv[2]))}")
+    else:
+        ensure_fixture_files()
+        print(f"made test files in {GOOD}")

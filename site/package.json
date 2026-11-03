@@ -8,7 +8,9 @@
     "start": "next start",
     "test": "vitest run",
     "fixture": "cd ../checker && python -m tests.fixture_files && python -m portfolio_checker --content tests/fixtures/good --site ../site --repo .. --mode push --skip-network --include-drafts",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "fixture:filled": "cd ../checker && python -m tests.fixture_files filled ../site/.sample-content && python -m portfolio_checker --content ../site/.sample-content --site ../site --repo .. --mode push --skip-network --include-drafts",
+    "content": "cd ../checker && python -m portfolio_checker --content ../content --site ../site --repo .. --mode push --skip-network --include-drafts"
   },
   "dependencies": {
     "@neondatabase/serverless": "1.2.0",
