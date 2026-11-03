@@ -1,0 +1,6 @@
+- slug: test-project-live
+  text: "Test project published"
+  date: 2026-10
+  link: { label: code, url: https://example.com/code/test-project }
+  status: published
+  reviewed_by_hamza: 2026-13-01

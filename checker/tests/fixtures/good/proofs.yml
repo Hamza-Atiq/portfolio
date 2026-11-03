@@ -1,0 +1,8 @@
+- id: test-certificate
+  file: proofs/test_certificate.png
+  note: "Test certificate image made by the test setup."
+  private_info_checked: true
+- id: test-cv
+  file: cv/test_cv.pdf
+  note: "Test CV file made by the test setup."
+  private_info_checked: true

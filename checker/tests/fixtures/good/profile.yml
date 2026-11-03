@@ -1,0 +1,18 @@
+name: "Test Person"
+tagline: "// test line → ok"
+summary: "This is test text for the checker. It is not about a real person."
+photo_dark: { src: photo/test_dark.png, alt: "Test photo, dark mode" }
+photo_light: { src: photo/test_light.png, alt: "Test photo, light mode" }
+email: test.person@example.com
+links:
+  github: https://github.com/test-person
+  linkedin: https://www.linkedin.com/in/test-person
+  leetcode: https://example.com/leetcode/test-person
+  lablab: https://example.com/lablab/test-person
+  devpost: https://example.com/devpost/test-person
+english_test:
+  text: "English: test score 100 (Jan 2026)"
+  url: https://example.com/english-test
+cv_file: cv/test_cv.pdf
+cv_reviewed_by_hamza: 2026-10-24
+reviewed_by_hamza: 2026-10-24

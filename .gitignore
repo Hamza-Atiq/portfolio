@@ -1,0 +1,16 @@
+.env*
+.vercel/
+site/data/content.json
+site/public/c/
+site/public/content-hash.txt
+node_modules/
+__pycache__/
+.venv/
+.next/
+*.tsbuildinfo
+next-env.d.ts
+# test files made by checker/tests/fixture_files.py
+checker/tests/fixtures/good/photo/
+checker/tests/fixtures/good/images/
+checker/tests/fixtures/good/proofs/
+checker/tests/fixtures/good/cv/
