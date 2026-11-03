@@ -192,6 +192,8 @@ its Pakistan and global rank.)
   `cv_reviewed_by_hamza: YYYY-MM-DD` (the CV must follow the same proof rules as the site). The CV is a PDF exported
   from Hamza's Google Doc "Hamza CV EE" and saved in the repo. **Hamza confirmed on 2026-10-24 that the CV is
   correct**, so `cv_reviewed_by_hamza: 2026-10-24`. The CV is Hamza's own document; Claude does not edit or re-check it.
+  It shows his phone number. On 2026-11-03 Hamza chose to publish it exactly as it is, knowing the number becomes
+  public; this is the one exception to constitution rule 8.
 - **FR-25** The email address is shown so people can copy it and as a "mailto" link; it is not hidden behind a form.
 - **FR-28** Search engines can find the public site. It has `robots.txt` (allow all, and name the sitemap) and
   `sitemap.xml` (the main page and every published project page). The site is added to Google Search Console and the
