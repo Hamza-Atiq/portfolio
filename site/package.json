@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
-    "fixture": "cd ../checker && python -m tests.fixture_files && python -m portfolio_checker --content tests/fixtures/good --site ../site --repo .. --mode push --skip-network --include-drafts"
+    "fixture": "cd ../checker && python -m tests.fixture_files && python -m portfolio_checker --content tests/fixtures/good --site ../site --repo .. --mode push --skip-network --include-drafts",
+    "e2e": "playwright test"
   },
   "dependencies": {
     "@neondatabase/serverless": "1.2.0",
@@ -17,6 +18,7 @@
     "react-markdown": "10.1.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.64.1",
     "@testing-library/dom": "10.4.2",
     "@testing-library/jest-dom": "7.0.1",
     "@testing-library/react": "16.3.3",

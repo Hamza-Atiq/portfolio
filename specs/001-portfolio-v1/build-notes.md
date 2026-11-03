@@ -71,3 +71,19 @@ Each note: what the step said, what went wrong, what was done.
     `notify.py` turns them into plain words ("the deploy step failed").
 20. **Task 13, Vercel Root Directory.** The workflow runs the Vercel commands inside `site/`, so the Vercel
     project's Root Directory setting must stay empty. This is written in the README for Task 13 Step 4.
+21. **Task 14 Step 1, e2e tests ran locally on the fixture.** `site/e2e/acceptance.spec.ts` (Playwright
+    `@playwright/test@1.64.1`, `npm run e2e`) reads the same `site/data/content.json` the site was built from.
+    It was run against `next start` twice:
+    - **drafts build** (`--include-drafts`, like `preview`): 11 passed, 1 skipped (`draft_not_on_public`, which
+      needs a production build);
+    - **production build** (no drafts, `SITE_URL` set): all 12 passed. `curl` also confirmed the fixture's draft
+      news line is not in the page.
+    Limits of the fixture: `p013_page_opens` checks the fixture's test title and result, not the real P-013
+    wording; `tap_targets_44px` cannot test the project filter chips, because they appear only with 4 or more
+    projects and the fixture has 1; YouTube thumbnails cannot load in this sandbox (no internet). The cloud
+    sandbox has an older Chromium installed, so `PW_CHROMIUM_PATH` lets the config use it; on a normal computer
+    run `npx playwright install chromium` once.
+22. **Task 14 Step 1, "no device setting" in a real browser.** Modern browsers no longer report "no preference"
+    for the colour scheme (Chromium reports light). So "dark when the device gives no setting" (FR-18) cannot
+    be tested in Playwright; it is covered by the unit tests (`pickTheme(null, null)` and the script with no
+    `matchMedia`).
