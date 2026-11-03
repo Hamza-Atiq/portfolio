@@ -170,3 +170,27 @@ def test_skip_link_no_date_warns_on_drafts_errors_in_production(good_root):
     assert r.ok() and len(r.warnings) == 1
     r = check_rules(c, good_root, TODAY, include_drafts=False)
     assert len(r.errors) == 1 and r.errors[0].file == "content/link_check_skip.yml"
+
+
+def test_every_listed_proof_must_be_privacy_checked(good_root):
+    # The repo is public, so a proof file is published even when no page uses it (constitution 8).
+    (good_root / "proofs" / "unused.png").write_bytes(b"x")
+    c = _load(good_root)
+    from portfolio_checker.models import ProofFile
+
+    c.proofs.append(ProofFile(id="unused", file="proofs/unused.png", note="Not used yet", private_info_checked=False))
+    r = check_rules(c, good_root, TODAY, include_drafts=False)
+    assert len(r.errors) == 1, r.errors
+    assert "unused" in r.errors[0].message and "private_info_checked" in r.errors[0].message
+
+
+def test_image_proof_over_2mb(good_root):
+    (good_root / "proofs" / "test_certificate.png").write_bytes(b"\0" * (2 * 1024 * 1024 + 1))
+    r = check_rules(_load(good_root), good_root, TODAY, include_drafts=False)
+    assert len(r.errors) == 1, r.errors
+    assert "2 MB" in r.errors[0].message
+
+
+def test_big_pdf_proof_is_fine(good_root):
+    (good_root / "cv" / "test_cv.pdf").write_bytes(b"%PDF" + b"\0" * (3 * 1024 * 1024))
+    assert check_rules(_load(good_root), good_root, TODAY, include_drafts=False).ok()

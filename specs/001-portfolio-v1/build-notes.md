@@ -87,3 +87,39 @@ Each note: what the step said, what went wrong, what was done.
     for the colour scheme (Chromium reports light). So "dark when the device gives no setting" (FR-18) cannot
     be tested in Playwright; it is covered by the unit tests (`pickTheme(null, null)` and the script with no
     `matchMedia`).
+23. **Self-review, test not used in CI.** `checker/tests/test_db_sync_real.py` runs the real sync and the search
+    query against a real Postgres, only when `TEST_DATABASE_URL` is set (it is skipped in normal runs and in CI).
+    It was run here against a local Postgres 16: 2 passed.
+
+## Self-review
+
+A strict review of every file on `build/v1`, against spec.md section by section (§4 sections, §4.1 awards,
+FR-1 to FR-30, §6, §9, §11). Each real problem was first shown by a failing test, then fixed.
+
+| # | Spec | Problem found | Fix and test |
+|---|---|---|---|
+| R1 | Constitution 8, FR-8 | The phone-number rule matched long numbers inside links. A LinkedIn post id (19 digits) contains `03` followed by 9 digits fairly often, so a real award link could stop the build with a false "phone number" error. | Phone patterns now need a non-digit before and after; `CNIC` is matched as a word. `test_long_numbers_in_links_are_not_phone_numbers`, `test_phone_next_to_text_is_found`. |
+| R2 | Constitution 8 | `private_info_checked: true` was required only for proof files a page uses. The repo will be public, so an unused proof file in `content/proofs/` is public too. | Every entry in `proofs.yml` must have `private_info_checked: true`. `test_every_listed_proof_must_be_privacy_checked`. |
+| R3 | FR-8 ("every image ≤ 2 MB") | Proof images (certificate thumbnails shown on the page) were not size-checked. | Image proof files (png/jpg/webp/avif/gif) must be ≤ 2 MB; PDFs are not limited. `test_image_proof_over_2mb`, `test_big_pdf_proof_is_fine`. |
+| R4 | FR-8 ("every link works") | Images in a project's Markdown (`![…](https://…)`) were not link-checked. | Image addresses are checked too. `test_markdown_body_image_is_checked`. |
+| R5 | FR-8 (skip list by exact address) | A link written without a trailing `/` in Markdown did not match the same address in `link_check_skip.yml` (pydantic writes it with `/`), so a skipped site was still fetched and could fail the build. | Every address is written in one normal form before comparing. `test_skip_list_matches_body_link_without_trailing_slash`. |
+| R6 | FR-12 | The daily run decides "something changed" from `content-hash.txt`, which covered only the JSON. If a project repo changed only an image, the daily run would not deploy it. | The hash now also covers every file under `public/c/`. `test_hash_changes_when_an_image_changes`, `test_hash_changes_when_a_pulled_image_changes`. |
+| R7 | FR-26 | A cancelled or timed-out run had no failed step and no problem lines, so it would **close** the open issue as if clean. | `notify.py` gets `--job-status`; a failed job with no named step counts as "a setup step failed", and a cancelled one is reported, never closing the issue. `test_cancelled_run_never_closes_issue`, `test_failed_job_without_named_step_counts_as_setup_failure`. |
+| R8 | FR-22 (phone, no sideways scroll) | A long word or file path in a project page (common in results) widened the page to 784 px on a 360 px phone. | `overflow-wrap: anywhere` on the page text (code blocks still scroll). The fixture project now has such text, and the e2e test `no_sideways_scroll_360_and_1440` (which also opens project pages) failed before and passes now. |
+| R9 | FR-21 (phone) | On a touch phone the card "lift" stuck after a tap (hover on touch). | Lift on hover only for devices that can hover; keyboard focus still lifts. e2e `cards_do_not_stay_lifted_after_a_tap` (Pixel 7) failed before and passes now. |
+| R10 | FR-28, FR-20 | If `SITE_URL` was missing at build time, the public sitemap, robots file and share previews would silently point to `http://localhost:3000`. | Use `SITE_URL`, else Vercel's own `VERCEL_PROJECT_PRODUCTION_URL`; a public production build with neither now fails with a clear message (preview/drafts builds never fail on this). Tests in `seo.test.ts`. |
+| R11 | FR-20 | A project page's Twitter/X card kept the main page's title and text. | The project page sets its own card. `metadata_twitter_card_is_the_project`. |
+
+Checked and found correct (no change): section order and hiding rules (§4); hackathon line; news 6 + "show all";
+filter chips only from 4 projects; awards main/other lists and proof thumbnails; CV button only with
+`cv_reviewed_by_hamza`; English line only with its link; drafts never in production or the database; database
+address only on `main`; 2-second search fallback; theme with no flash and blocked storage; round photo per mode;
+custom 404 with status 404; favicon; preview build `noindex`; Markdown raw HTML not rendered; nothing written
+when a check fails; the real sync SQL and search query (note 23). One suspected bug was **not** a bug:
+`_item_name` in `load.py` reads `a or b if c else d` as `(a or b) if c else d`, so a list item that is plain
+text gives an error, not a crash; a regression test was added.
+
+**For the owner (not changed, because it would add to the spec):** project text is rendered as standard
+(CommonMark) Markdown. Markdown **tables** are not part of it and would show as plain `|` text. If the P-013
+page should have a results table, either write results as a list (no change), or approve adding table support
+(`remark-gfm`, one small package).

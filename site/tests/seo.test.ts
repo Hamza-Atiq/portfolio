@@ -53,3 +53,18 @@ describe("robots, sitemap and root metadata", () => {
     expect(m.description).toBeTruthy();
   });
 });
+
+describe("site address", () => {
+  it("uses SITE_URL, else Vercel's production address", async () => {
+    const { siteUrl } = await import("@/lib/seo");
+    expect(siteUrl({ SITE_URL: "https://a.test/" })).toBe("https://a.test");
+    expect(siteUrl({ VERCEL_PROJECT_PRODUCTION_URL: "hamza.vercel.app" })).toBe("https://hamza.vercel.app");
+  });
+
+  it("a public production build without an address fails instead of listing localhost", async () => {
+    const { siteUrl } = await import("@/lib/seo");
+    expect(() => siteUrl({ NODE_ENV: "production" }, { strict: true })).toThrow(/SITE_URL/);
+    expect(siteUrl({ NODE_ENV: "production" })).toBe("http://localhost:3000");
+    expect(() => robotsFor(bundle(false), siteUrl({ NODE_ENV: "development" }, { strict: true }))).not.toThrow();
+  });
+});

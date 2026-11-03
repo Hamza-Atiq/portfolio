@@ -140,3 +140,18 @@ def test_network_error_is_broken(content):
     rec = Recorder({url: answer})
     r = check_links(content, "push", rec.client())
     assert r.errors and "did not answer" in r.errors[0].message
+
+
+def test_markdown_body_image_is_checked(content):
+    content.projects[0].body += "\n![A chart](https://example.com/chart.png)\n"
+    assert "https://example.com/chart.png" in [u for _, u in all_links(content)]
+
+
+def test_skip_list_matches_body_link_without_trailing_slash(content):
+    from portfolio_checker.models import SkipLink
+
+    content.skip_links.append(SkipLink(url="https://blocked.example.org"))
+    content.projects[0].body += "\nSee https://blocked.example.org for more.\n"
+    rec = Recorder()
+    check_links(content, "push", rec.client())
+    assert all("blocked.example.org" not in u for _, u in rec.calls)

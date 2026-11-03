@@ -47,7 +47,7 @@ body {
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", sans-serif;
   font-size: 1.0625rem;
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-wrap: anywhere; /* long words and paths wrap on a phone instead of widening the page */
 }
 
 code,
@@ -324,7 +324,15 @@ section {
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
 }
 
-.card:hover,
+/* Lift on mouse hover only (a touch screen would leave the card lifted after a tap) or keyboard focus. */
+@media (hover: hover) {
+  .card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+    box-shadow: 0 6px 24px var(--glow);
+  }
+}
+
 .card:focus-within {
   transform: translateY(-3px);
   border-color: var(--accent);
@@ -448,6 +456,7 @@ details.more > summary {
 
 .prose pre {
   overflow-x: auto;
+  overflow-wrap: normal;
   background: var(--bg-card);
   border: 1px solid var(--line);
   padding: 0.75rem;

@@ -65,6 +65,11 @@ describe("project page", () => {
     expect(images[0].alt).toBe(p.cover!.alt);
   });
 
+  it("metadata_twitter_card_is_the_project", async () => {
+    const meta = await generateMetadata({ params: Promise.resolve({ slug: "p013-grid-contingency" }) });
+    expect(meta.twitter).toMatchObject({ title: p013().title, description: p013().summary });
+  });
+
   it("metadata_falls_back_to_photo_without_cover", async () => {
     const b = getBundle();
     const p = b.projects[0];

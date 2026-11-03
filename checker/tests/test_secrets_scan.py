@@ -64,3 +64,15 @@ def test_explicit_file_list(tmp_path):
     repo = _repo(tmp_path, {"a.txt": GH_TOKEN, "b.txt": "fine"})
     assert scan_repo(repo, [repo / "b.txt"]).ok()
     assert not scan_repo(repo, [repo / "a.txt"]).ok()
+
+
+def test_long_numbers_in_links_are_not_phone_numbers(tmp_path):
+    # LinkedIn post ids are long numbers that can contain "03" followed by 9 digits.
+    url = "https://www.linkedin.com/posts/someone_activity-7" + "2603" + "123456789" + "0123-AbCd"
+    repo = _repo(tmp_path, {"content/awards.yml": f"- proof_url: {url}\n"})
+    assert scan_repo(repo).ok()
+
+
+def test_phone_next_to_text_is_found(tmp_path):
+    repo = _repo(tmp_path, {"content/x.yml": "call: 03" + "001234567 now\n"})
+    assert not scan_repo(repo).ok()

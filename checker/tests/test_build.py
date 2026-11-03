@@ -66,7 +66,9 @@ def test_hash_ignores_generated_at(content, tmp_path):
     b2["generated_at"] = "1999-01-01T00:00:00Z"
     h1 = write_site(b1, FIX / "good", tmp_path / "s1")
     h2 = write_site(b2, FIX / "good", tmp_path / "s2")
-    assert h1 == h2 == b1["hash"]
+    assert h1 == h2
+    written = json.loads((tmp_path / "s1" / "data" / "content.json").read_text(encoding="utf-8"))
+    assert written["hash"] == h1
     assert (tmp_path / "s1" / "public" / "content-hash.txt").read_text().strip() == h1
     content.news[0].text = "changed"
     assert build_bundle(content, False)["hash"] != h1
@@ -81,3 +83,29 @@ def test_write_site_copies_only_used_assets(content, tmp_path):
     assert not (pub / "cv").exists()
     data = json.loads((tmp_path / "data" / "content.json").read_text(encoding="utf-8"))
     assert data["projects"][0]["slug"] == "p013-grid-contingency"
+
+
+def test_hash_changes_when_an_image_changes(content, tmp_path):
+    import shutil
+
+    from tests.fixture_files import GOOD
+
+    root = tmp_path / "content"
+    shutil.copytree(GOOD, root)
+    h1 = write_site(build_bundle(content, False), root, tmp_path / "s1")
+    (root / "images" / "p013" / "cover.png").write_bytes(b"a different image")
+    h2 = write_site(build_bundle(content, False), root, tmp_path / "s2")
+    assert h1 != h2
+    data = json.loads((tmp_path / "s2" / "data" / "content.json").read_text(encoding="utf-8"))
+    assert data["hash"] == h2 == (tmp_path / "s2" / "public" / "content-hash.txt").read_text().strip()
+
+
+def test_hash_changes_when_a_pulled_image_changes(content, tmp_path):
+    site = tmp_path / "s"
+    pulled = site / "public" / "c" / "sources" / "x" / "abc-cover.png"
+    pulled.parent.mkdir(parents=True)
+    pulled.write_bytes(b"one")
+    h1 = write_site(build_bundle(content, False), FIX / "good", site)
+    pulled.write_bytes(b"two")
+    h2 = write_site(build_bundle(content, False), FIX / "good", site)
+    assert h1 != h2

@@ -133,19 +133,33 @@ def used_assets(bundle: dict) -> list[str]:
     return sorted(found)
 
 
+def _assets_digest(folder: Path) -> str:
+    """sha256 over every file under public/c/ (path + content), local and pulled."""
+    h = hashlib.sha256()
+    if folder.is_dir():
+        for f in sorted(p for p in folder.rglob("*") if p.is_file()):
+            h.update(f.relative_to(folder).as_posix().encode("utf-8") + b"\0")
+            h.update(hashlib.sha256(f.read_bytes()).digest())
+    return h.hexdigest()
+
+
 def write_site(bundle: dict, content_root: Path, site_root: Path) -> str:
-    """Write content.json, copy used assets to public/c/, write content-hash.txt. Returns the hash."""
+    """Copy used assets to public/c/, write content.json and content-hash.txt. Returns the hash.
+
+    The hash covers the JSON text (without `generated_at`) and every asset file, so the daily run also
+    deploys when only an image changed (FR-12).
+    """
     site_root = Path(site_root)
-    h = _hash(bundle)
-    bundle = {**bundle, "hash": h}
-    data_dir = site_root / "data"
-    data_dir.mkdir(parents=True, exist_ok=True)
-    (data_dir / "content.json").write_text(_json_text(bundle) + "\n", encoding="utf-8")
     pub = site_root / "public"
     for rel in used_assets(bundle):
         target = pub / "c" / rel
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(Path(content_root) / rel, target)
+    h = hashlib.sha256((_hash(bundle) + _assets_digest(pub / "c")).encode("ascii")).hexdigest()
+    bundle = {**bundle, "hash": h}
+    data_dir = site_root / "data"
+    data_dir.mkdir(parents=True, exist_ok=True)
+    (data_dir / "content.json").write_text(_json_text(bundle) + "\n", encoding="utf-8")
     pub.mkdir(parents=True, exist_ok=True)
     (pub / "content-hash.txt").write_text(h + "\n", encoding="utf-8")
     return h

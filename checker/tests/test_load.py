@@ -110,3 +110,11 @@ def test_bad_team_form(good_root):
     _, r = load_content(good_root)
     assert len(r.errors) == 1, r.errors
     assert "team" in r.errors[0].message
+
+
+def test_list_item_that_is_not_a_mapping_is_an_error_not_a_crash(good_root):
+    p = good_root / "news.yml"
+    p.write_text(p.read_text(encoding="utf-8") + "- just some text\n", encoding="utf-8")
+    _, r = load_content(good_root)
+    assert len(r.errors) == 1, r.errors
+    assert r.errors[0].file == "content/news.yml" and "item 4" in r.errors[0].message

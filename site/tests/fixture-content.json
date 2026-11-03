@@ -30,8 +30,8 @@
    }
   ]
  },
- "generated_at": "2026-11-03T14:36:32Z",
- "hash": "11e1d7ce3257ed21df39f63365a5d660da7c06a50151e74c1de6e8ea47bb9eea",
+ "generated_at": "2026-11-03T15:06:46Z",
+ "hash": "af3c4ac127f9af6d51108601d6c2b56b800fa76402cc99a485dd6bc4f8198159",
  "include_drafts": true,
  "interests": [
   {
@@ -113,7 +113,7 @@
  },
  "projects": [
   {
-   "body": "## Problem\n\nA test problem. See [the test page](https://example.com/body-link).\n\n## Method\n\n```\nhttps://example.com/in-a-code-block-not-checked\n```\n",
+   "body": "## Problem\n\nA test problem. See [the test page](https://example.com/body-link).\n\n## Method\n\n```\nhttps://example.com/in-a-code-block-not-checked\n```\n\n## Results\n\nLong text must wrap on a phone: `results/n1_screening/ieee57_bus_contingency_ranking_all_eighty_lines_v2.csv`\nand averylongwordwithoutanyspacesthatwouldpushthepagesidewaysonasmallphonescreen.\n",
    "cover": {
     "alt": "Test cover image",
     "src": "/c/images/p013/cover.png"

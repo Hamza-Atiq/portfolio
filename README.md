@@ -116,6 +116,8 @@ npm start
 ## Set-up notes (for the first deploy)
 
 - GitHub secrets: `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID`, `DATABASE_URL`. GitHub variable: `SITE_URL`.
+- Set `SITE_URL` in Vercel too (the public address, for example `https://hamza-atiq.vercel.app`). A public build
+  with no address stops with a clear message, so the sitemap never lists a wrong address.
 - The Vercel project is made from the command line and is **not** connected to this GitHub repo. Its
   Root Directory setting stays empty, because the workflow runs the Vercel commands inside `site/`.
 - The database address is set in Vercel for **Production only**, never Preview or Development.

@@ -3,8 +3,20 @@ import type { Bundle } from "@/lib/content";
 
 type Env = Record<string, string | undefined>;
 
-export function siteUrl(env: Env = process.env): string {
-  return (env.SITE_URL || "http://localhost:3000").replace(/\/+$/, "");
+const LOCAL = "http://localhost:3000";
+
+/**
+ * The public address: SITE_URL, else the production address Vercel gives every build.
+ * With `strict` (robots, sitemap and share previews of a public production build), a missing address is an
+ * error, so the live sitemap can never list localhost.
+ */
+export function siteUrl(env: Env = process.env, opts: { strict?: boolean } = {}): string {
+  if (env.SITE_URL) return env.SITE_URL.replace(/\/+$/, "");
+  if (env.VERCEL_PROJECT_PRODUCTION_URL) return `https://${env.VERCEL_PROJECT_PRODUCTION_URL.replace(/\/+$/, "")}`;
+  if (opts.strict && env.NODE_ENV === "production") {
+    throw new Error("SITE_URL is not set: set it in Vercel (and GitHub) to the public address of the site");
+  }
+  return LOCAL;
 }
 
 /** The first sentence of a text, for one-line share previews. */
@@ -28,7 +40,7 @@ export function rootMetadata(bundle: Bundle, env: Env = process.env): Metadata {
   const { profile } = bundle;
   const description = firstSentence(profile.summary);
   const meta: Metadata = {
-    metadataBase: new URL(siteUrl(env)),
+    metadataBase: new URL(siteUrl(env, { strict: !bundle.include_drafts })),
     title: profile.name,
     description,
     openGraph: {

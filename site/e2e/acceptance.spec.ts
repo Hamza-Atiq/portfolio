@@ -4,7 +4,7 @@
  */
 import fs from "node:fs";
 import path from "node:path";
-import { type Page, expect, test } from "@playwright/test";
+import { type Page, devices, expect, test } from "@playwright/test";
 import type { Bundle } from "../lib/content";
 
 const bundle: Bundle = JSON.parse(
@@ -182,4 +182,16 @@ test("draft_not_on_public", async ({ page }) => {
   for (const item of items) expect(item.reviewed_by_hamza, item.slug).toBeTruthy();
   await page.goto("/");
   for (const n of bundle.news.slice(0, 6)) await expect(page.getByText(n.text).first()).toBeVisible();
+});
+
+test.describe("touch phone", () => {
+  const { defaultBrowserType: _ignored, ...pixel } = devices["Pixel 7"];
+  test.use(pixel);
+  test("cards_do_not_stay_lifted_after_a_tap", async ({ page }) => {
+    await page.goto("/");
+    const card = page.locator("#research .card").first();
+    test.skip((await card.count()) === 0, "no project card in this build");
+    await card.hover();
+    expect(await card.evaluate((e) => getComputedStyle(e).transform)).toBe("none");
+  });
 });

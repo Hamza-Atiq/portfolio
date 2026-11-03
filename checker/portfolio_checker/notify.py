@@ -66,6 +66,7 @@ def main(argv: list[str] | None = None) -> int:
     i.add_argument("--branch", required=True)
     i.add_argument("--problems-file", type=Path, required=True)
     i.add_argument("--failed-steps", default="")
+    i.add_argument("--job-status", default="success", help="success, failure or cancelled")
     i.add_argument("--open-issue", default="")
     i.add_argument("--run-url", required=True)
     i.add_argument("--body-file", type=Path, required=True)
@@ -84,6 +85,10 @@ def main(argv: list[str] | None = None) -> int:
         problems = [l for l in args.problems_file.read_text(encoding="utf-8").splitlines() if l.strip()]
     failed = [s for s in args.failed_steps.replace(",", " ").split() if s]
     failed = ["a setup step failed" if s == "setup" else s for s in failed]
+    if not failed and args.job_status == "failure":
+        failed = ["a setup step failed"]
+    elif not failed and args.job_status != "success":
+        failed = ["the run was cancelled or timed out before it finished"]
     open_issue = int(args.open_issue) if args.open_issue.strip().isdigit() else None
     action = issue_action(args.event, args.branch, problems, failed, open_issue)
     args.body_file.write_text(issue_body(problems, failed, args.run_url), encoding="utf-8")

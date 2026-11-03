@@ -3,5 +3,6 @@ import { getBundle } from "@/lib/content";
 import { siteUrl, sitemapFor } from "@/lib/seo";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return sitemapFor(getBundle(), siteUrl());
+  const bundle = getBundle();
+  return sitemapFor(bundle, siteUrl(process.env, { strict: !bundle.include_drafts }));
 }

@@ -8,6 +8,7 @@ from typing import Literal
 
 import httpx
 from markdown_it import MarkdownIt
+from pydantic import HttpUrl, TypeAdapter, ValidationError
 
 from .models import Content, Report
 
@@ -22,6 +23,7 @@ SKIP_HINT = "If this site blocks robots (it opens fine in your browser), add it 
 _sleep = time.sleep
 _URL_IN_TEXT = re.compile(r"https?://[^\s<>()\[\]\"']+")
 _md = MarkdownIt("commonmark")
+_URL = TypeAdapter(HttpUrl)
 
 
 def body_links(markdown: str) -> list[str]:
@@ -30,8 +32,8 @@ def body_links(markdown: str) -> list[str]:
 
     def walk(tokens) -> None:
         for t in tokens:
-            if t.type == "link_open":
-                href = t.attrGet("href") or ""
+            if t.type in ("link_open", "image"):
+                href = str(t.attrGet("href" if t.type == "link_open" else "src") or "")
                 if href.startswith(("http://", "https://")):
                     found.append(href)
             elif t.type == "text":
@@ -41,6 +43,14 @@ def body_links(markdown: str) -> list[str]:
 
     walk(_md.parse(markdown))
     return found
+
+
+def normal_url(url: str) -> str:
+    """One written form per address (as pydantic writes it), so the skip list matches exactly."""
+    try:
+        return str(_URL.validate_python(url))
+    except ValidationError:
+        return url
 
 
 def all_links(content: Content) -> list[tuple[str, str]]:
@@ -56,6 +66,7 @@ def all_links(content: Content) -> list[tuple[str, str]]:
     for t in content.teaching:
         out += [("content/teaching.yml", str(v.url)) for v in t.videos]
     out += [("content/awards.yml", str(a.proof_url)) for a in content.awards]
+    out = [(f, normal_url(u)) for f, u in out]
     seen: set[tuple[str, str]] = set()
     return [x for x in out if not (x in seen or seen.add(x))]
 
@@ -93,7 +104,7 @@ def check_links(
     content: Content, mode: Literal["push", "daily"], client: httpx.Client | None = None
 ) -> Report:
     report = Report()
-    skip = {str(s.url) for s in content.skip_links}
+    skip = {normal_url(str(s.url)) for s in content.skip_links}
     pairs = [(f, u) for f, u in all_links(content) if u not in skip]
     urls = list(dict.fromkeys(u for _, u in pairs))
     own = client is None

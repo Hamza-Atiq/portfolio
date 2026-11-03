@@ -26,10 +26,10 @@ SECRETS: list[tuple[str, re.Pattern[str]]] = [
 PRIVATE: list[tuple[str, re.Pattern[str]]] = [
     ("a date of birth", re.compile(r"date of birth", re.IGNORECASE)),
     ("a date of birth (DOB)", re.compile(r"\bDOB\b")),
-    ("an ID card number (CNIC)", re.compile(r"CNIC")),
+    ("an ID card number (CNIC)", re.compile(r"\bCNIC\b")),
     ("a passport number", re.compile(r"passport (no|number)", re.IGNORECASE)),
-    ("a phone number", re.compile(r"\+?92[ -]?3\d{2}[ -]?\d{7}")),
-    ("a phone number", re.compile(r"03\d{2}-?\d{7}")),
+    ("a phone number", re.compile(r"(?<![\d\w])\+?92[ -]?3\d{2}[ -]?\d{7}(?!\d)")),
+    ("a phone number", re.compile(r"(?<![\d\w])03\d{2}-?\d{7}(?!\d)")),
 ]
 
 

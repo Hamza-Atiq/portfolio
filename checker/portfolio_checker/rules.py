@@ -11,6 +11,7 @@ from .models import Content, Image, Report
 MAX_IMAGE_BYTES = 2 * 1024 * 1024
 SKIP_LINK_MAX_DAYS = 90
 SOURCE_PREFIX = "/c/sources/"
+IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".avif", ".gif"}
 
 
 def _dupes(slugs: Iterable[str]) -> list[str]:
@@ -90,16 +91,20 @@ def check_rules(content: Content, root: Path, today: date, include_drafts: bool)
     # 3. proofs
     proofs = {p.id: p for p in content.proofs}
     for p in content.proofs:
-        check_file(root, p.file, report, "content/proofs.yml", f'proof "{p.id}" file')
+        real = check_file(root, p.file, report, "content/proofs.yml", f'proof "{p.id}" file')
+        if p.private_info_checked is not True:
+            report.error("content/proofs.yml", f'proof "{p.id}" has private_info_checked not true; the repo is '
+                         "public, so open the file, check it has no private details, then set it to true")
+        if real is not None and real.suffix.lower() in IMAGE_SUFFIXES and real.stat().st_size > MAX_IMAGE_BYTES:
+            mb = real.stat().st_size / (1024 * 1024)
+            report.error("content/proofs.yml", f'proof image "content/{p.file}" is {mb:.1f} MB; '
+                         "images must be at most 2 MB")
     used: list[tuple[str, str]] = [("content/awards.yml", a.proof_id) for a in content.awards if a.proof_id]
     used += [(p.file, pid) for p in content.projects for pid in p.proofs]
     for file, pid in used:
         entry = proofs.get(pid)
         if entry is None:
             report.error(file, f'proof "{pid}" is not listed in content/proofs.yml')
-        elif entry.private_info_checked is not True:
-            report.error("content/proofs.yml", f'proof "{pid}" is used but private_info_checked is not true; '
-                         "open the file, check it has no private details, then set it to true")
     listed = {p.file for p in content.proofs}
     for folder in ("proofs", "cv"):
         base = root / folder
@@ -124,8 +129,6 @@ def check_rules(content: Content, root: Path, today: date, include_drafts: bool)
         entry = next((p for p in content.proofs if p.file == prof.cv_file), None)
         if entry is None:
             report.error("content/profile.yml", f'cv_file "{prof.cv_file}" is not listed in content/proofs.yml')
-        elif entry.private_info_checked is not True:
-            report.error("content/proofs.yml", f'cv_file "{prof.cv_file}" has private_info_checked not true')
 
     # 6. links checked by hand
     for link in content.skip_links:

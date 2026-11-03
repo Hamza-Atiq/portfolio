@@ -128,11 +128,10 @@ jobs:
           [ "${{ steps.checker.outcome }}" = "failure" ] && failed="$failed checker"
           [ "${{ steps.site_tests.outcome }}" = "failure" ] && failed="$failed site_tests"
           [ "${{ steps.deploy.outcome }}" = "failure" ] && failed="$failed deploy"
-          if [ "$JOB_STATUS" = "failure" ] && [ -z "$failed" ]; then failed="setup"; fi
           open="$(gh issue list --state open --search '"Site check needs attention" in:title' --json number --jq '.[0].number // ""')"
           action="$(python -m portfolio_checker.notify issue \
             --event "${{ github.event_name }}" --branch "${{ github.ref_name }}" \
-            --problems-file "$RUNNER_TEMP/problems.txt" --failed-steps "$failed" \
+            --problems-file "$RUNNER_TEMP/problems.txt" --failed-steps "$failed" --job-status "$JOB_STATUS" \
             --open-issue "$open" --run-url "$RUN_URL" --body-file "$RUNNER_TEMP/issue.md")"
           echo "issue action: $action"
           case "$action" in

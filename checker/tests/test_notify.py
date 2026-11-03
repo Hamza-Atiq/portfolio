@@ -94,3 +94,20 @@ def test_cli_keepalive(capsys):
     assert capsys.readouterr().out.strip() == "true"
     assert main(["keepalive", "--last", "2026-02-20", "--today", "2026-03-01"]) == 0
     assert capsys.readouterr().out.strip() == "false"
+
+
+def test_cancelled_run_never_closes_issue(tmp_path, capsys):
+    code = main(["issue", "--event", "schedule", "--branch", "main", "--problems-file", str(tmp_path / "none"),
+                 "--failed-steps", "", "--job-status", "cancelled", "--open-issue", "3", "--run-url", RUN,
+                 "--body-file", str(tmp_path / "b.md")])
+    assert code == 0
+    assert capsys.readouterr().out.strip() == "update"
+    assert "did not finish" in (tmp_path / "b.md").read_text(encoding="utf-8")
+
+
+def test_failed_job_without_named_step_counts_as_setup_failure(tmp_path, capsys):
+    main(["issue", "--event", "push", "--branch", "main", "--problems-file", str(tmp_path / "none"),
+          "--failed-steps", "", "--job-status", "failure", "--open-issue", "", "--run-url", RUN,
+          "--body-file", str(tmp_path / "b.md")])
+    assert capsys.readouterr().out.strip() == "create"
+    assert "a setup step failed" in (tmp_path / "b.md").read_text(encoding="utf-8")
