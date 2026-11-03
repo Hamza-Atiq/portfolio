@@ -14,6 +14,7 @@ from pydantic import (
     EmailStr,
     Field,
     HttpUrl,
+    PrivateAttr,
     StrictBool,
     StrictInt,
     StrictStr,
@@ -209,6 +210,12 @@ class Project(Strict):
     proofs: list[Text] = []
     pin: StrictInt | None = None
     body: StrictStr = ""
+    # where the project came from, for messages (not a content field)
+    _file: str = PrivateAttr(default="")
+
+    @property
+    def file(self) -> str:
+        return self._file or f"content/projects/{self.slug}.md"
 
 
 class Video(Strict):

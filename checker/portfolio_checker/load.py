@@ -193,11 +193,13 @@ def load_project(text: str, label: str, report: Report) -> Project | None:
     data["body"] = body
     name = f'project "{data["slug"]}"' if isinstance(data.get("slug"), str) else "project"
     try:
-        return Project.model_validate(data)
+        project = Project.model_validate(data)
     except ValidationError as exc:
         for msg in simple_errors(exc):
             report.error(label, f"{name}: {msg}")
         return None
+    project._file = label
+    return project
 
 
 def load_content(root: Path) -> tuple[Content | None, Report]:
