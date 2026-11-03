@@ -4,6 +4,7 @@ import Contact from "@/components/Contact";
 import Interests from "@/components/Interests";
 import News from "@/components/News";
 import ProjectList from "@/components/ProjectList";
+import SearchBox from "@/components/SearchBox";
 import SectionTitle from "@/components/SectionTitle";
 import Skills from "@/components/Skills";
 import Teaching from "@/components/Teaching";
@@ -16,6 +17,7 @@ export default function Home({ bundle }: { bundle: Bundle }) {
   return (
     <>
       <About profile={bundle.profile} interests={bundle.interests} />
+      <SearchBox index={bundle.search_index} />
       <News items={bundle.news} />
       <Interests items={bundle.interests} />
       {research.length > 0 && (
