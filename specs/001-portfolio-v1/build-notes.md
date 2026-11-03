@@ -42,3 +42,13 @@ Each note: what the step said, what went wrong, what was done.
 13. **Task 9, test data.** `npm run fixture` (in `site/`) makes the test photos and runs the checker on
     `checker/tests/fixtures/good` with `--skip-network --include-drafts`, as the plan says. Vitest reads the
     committed copy `site/tests/fixture-content.json` (set in `vitest.config.ts`), never `site/data/content.json`.
+14. **Task 12, where the search box is.** The plan does not say where the search box goes on the page. It is
+    placed right below About, outside the numbered sections, so the section order of spec §4 is unchanged.
+    The owner may want it moved; this is a one-line change in `site/components/Home.tsx`.
+15. **Task 11–12, local checks.** On a local `next start` with the fixture data: `/nope` and `/projects/nope`
+    answer 404 with the custom page, `/icon.svg` answers 200, the drafts build gives `Disallow: /`, an empty
+    sitemap and `noindex`, and `/api/search?q=test project` answers `source: "local"` with no database.
+    In this sandbox the YouTube thumbnail of the test video could not load (no internet access to
+    `i.ytimg.com`); this is expected here and is checked for real in Task 14.
+16. **Audits.** `npm audit --omit=dev`: 0 vulnerabilities. `pip-audit -r checker/requirements.txt`: no known
+    vulnerabilities.
