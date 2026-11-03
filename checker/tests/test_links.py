@@ -52,7 +52,7 @@ def test_ok_link_passes(content):
     rec = Recorder()
     r = check_links(content, "push", rec.client())
     assert r.ok() and not r.warnings, r.errors
-    assert ("HEAD", "https://example.com/code/test-project") in rec.calls
+    assert ("GET", "https://example.com/code/test-project") in rec.calls
 
 
 def test_markdown_body_link_is_checked(content):
@@ -98,6 +98,27 @@ def test_head_405_falls_back_to_get(content):
     assert ("GET", url) in rec.calls
 
 
+def test_head_ok_alone_is_not_enough(content):
+    # A site can answer HEAD with 200 and the real page (GET) with 404.
+    url = "https://example.com/demo/test-project"
+    rec = Recorder({url: lambda request, n: 200 if request.method == "HEAD" else 404})
+    r = check_links(content, "push", rec.client())
+    assert len(r.errors) == 1, r.errors
+    assert url in r.errors[0].message and "404" in r.errors[0].message
+
+
+def test_get_does_not_download_the_body(content):
+    class Endless(httpx.SyncByteStream):
+        def __iter__(self):
+            raise AssertionError("the page body was downloaded")
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, stream=Endless())
+
+    r = check_links(content, "push", httpx.Client(transport=httpx.MockTransport(handler)))
+    assert r.ok(), r.errors
+
+
 def test_skip_url_not_fetched(content):
     skipped = "https://www.linkedin.com/in/test-person"
     rec = Recorder()
@@ -128,7 +149,7 @@ def test_gives_up_after_three_tries(content, no_sleep):
     rec = Recorder({url: 503})
     r = check_links(content, "push", rec.client())
     assert len(r.errors) == 2  # the URL is used by the project and by a news item
-    assert sum(1 for m, u in rec.calls if u == url and m == "HEAD") == 3
+    assert sum(1 for m, u in rec.calls if u == url and m == "GET") == 3
 
 
 def test_network_error_is_broken(content):

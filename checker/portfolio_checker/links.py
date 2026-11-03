@@ -17,7 +17,6 @@ TRIES = 3
 WAITS = (1, 2)
 TIMEOUT = 10.0
 WORKERS = 8
-FALLBACK_STATUS = {403, 405, 429}
 SKIP_HINT = "If this site blocks robots (it opens fine in your browser), add it to content/link_check_skip.yml."
 
 _sleep = time.sleep
@@ -72,21 +71,21 @@ def all_links(content: Content) -> list[tuple[str, str]]:
 
 
 def _try_once(client: httpx.Client, url: str) -> tuple[bool, str]:
+    """One check: a GET with a browser-like User-Agent, streamed so only the status line and headers are read.
+
+    HEAD is never trusted on its own: some sites answer HEAD with 200 while the page itself is gone.
+    The response is closed without reading its body.
+    """
     try:
-        resp = client.head(url, follow_redirects=True, timeout=TIMEOUT)
-        if resp.status_code < 400:
-            return True, str(resp.status_code)
-        if resp.status_code not in FALLBACK_STATUS:
-            return False, f"status {resp.status_code}"
-    except httpx.HTTPError:
-        pass
-    try:
-        resp = client.get(url, follow_redirects=True, timeout=TIMEOUT, headers={"User-Agent": USER_AGENT})
-        if resp.status_code < 400:
-            return True, str(resp.status_code)
-        return False, f"status {resp.status_code}"
+        with client.stream(
+            "GET", url, follow_redirects=True, timeout=TIMEOUT, headers={"User-Agent": USER_AGENT}
+        ) as resp:
+            status = resp.status_code
     except httpx.HTTPError as exc:
         return False, f"error: {type(exc).__name__}"
+    if status < 400:
+        return True, str(status)
+    return False, f"status {status}"
 
 
 def check_url(client: httpx.Client, url: str) -> tuple[bool, str]:

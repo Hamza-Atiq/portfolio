@@ -123,3 +123,21 @@ text gives an error, not a crash; a regression test was added.
 (CommonMark) Markdown. Markdown **tables** are not part of it and would show as plain `|` text. If the P-013
 page should have a results table, either write results as a list (no change), or approve adding table support
 (`remark-gfm`, one small package).
+
+## Two small fixes (after the self-review)
+
+24. **Repeated keys in YAML are refused.** PyYAML silently keeps the last of two equal keys (for example two
+    `summary:` lines), so text could be lost without notice. The loader now refuses any mapping that repeats a
+    key, at any depth, in every content file, project header and pulled `portfolio.yml`. The error names the file,
+    the line and the key, for example `content/news.yml: is not valid YAML (line 3): the key "text" appears twice
+    (first on line 2)`. Line numbers in a project header count from the top of the `.md` file. Tests:
+    `test_repeated_key_refused`, `test_repeated_key_in_project_header_names_the_file_line`,
+    `test_repeated_key_in_nested_mapping_refused`.
+25. **A link is never accepted on HEAD alone.** Plan Task 3 said: HEAD first, GET only after 403/405/429 or an
+    error. But some sites answer HEAD with 200 while the page itself answers 404, so a dead link could pass. Each
+    check is now one GET with the browser-like User-Agent, sent as a stream: only the status and headers are
+    read, and the response is closed without downloading the page. Everything else is unchanged: redirects
+    followed, good = status below 400, 3 tries with 1 s and 2 s waits, 10 s timeout, 8 at a time, skip list,
+    error on push and warning on daily. Tests: `test_head_ok_alone_is_not_enough`,
+    `test_get_does_not_download_the_body`; `test_ok_link_passes` and `test_gives_up_after_three_tries` now count
+    GET requests.

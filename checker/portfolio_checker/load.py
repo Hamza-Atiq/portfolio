@@ -44,14 +44,35 @@ def _timestamp(loader: yaml.SafeLoader, node: yaml.Node) -> Any:
 _Loader.add_constructor("tag:yaml.org,2002:timestamp", _timestamp)
 
 
+def _mapping_without_repeats(loader: yaml.SafeLoader, node: yaml.MappingNode) -> dict:
+    """PyYAML silently keeps the last of two equal keys; refuse it instead, so no text is lost unseen."""
+    loader.flatten_mapping(node)
+    seen: dict[Any, int] = {}
+    for key_node, _ in node.value:
+        key = loader.construct_object(key_node, deep=True)
+        try:
+            first = seen.get(key)
+        except TypeError:  # an unhashable key; the normal constructor reports it
+            continue
+        if first is not None:
+            raise yaml.constructor.ConstructorError(
+                None, None, f'the key "{key}" appears twice (first on line {first + 1})', key_node.start_mark
+            )
+        seen[key] = key_node.start_mark.line
+    return loader.construct_mapping(node, deep=True)
+
+
+_Loader.add_constructor("tag:yaml.org,2002:map", _mapping_without_repeats)
+
+
 def read_yaml_text(text: str) -> Any:
     text = text.lstrip("﻿").replace("\r\n", "\n")
     return yaml.load(text, Loader=_Loader)  # noqa: S506 - _Loader is a SafeLoader
 
 
-def _yaml_problem(exc: yaml.YAMLError) -> str:
+def _yaml_problem(exc: yaml.YAMLError, line_offset: int = 0) -> str:
     mark = getattr(exc, "problem_mark", None)
-    where = f" (line {mark.line + 1})" if mark else ""
+    where = f" (line {mark.line + 1 + line_offset})" if mark else ""
     problem = getattr(exc, "problem", None) or str(exc)
     return f"is not valid YAML{where}: {problem}"
 
@@ -182,7 +203,7 @@ def load_project(text: str, label: str, report: Report) -> Project | None:
     try:
         data = read_yaml_text(header)
     except yaml.YAMLError as exc:
-        report.error(label, "the header " + _yaml_problem(exc))
+        report.error(label, "the header " + _yaml_problem(exc, line_offset=1))  # line 1 is the first ---
         return None
     if not isinstance(data, dict):
         report.error(label, "the header must be a list of fields (key: value)")

@@ -118,3 +118,32 @@ def test_list_item_that_is_not_a_mapping_is_an_error_not_a_crash(good_root):
     _, r = load_content(good_root)
     assert len(r.errors) == 1, r.errors
     assert r.errors[0].file == "content/news.yml" and "item 4" in r.errors[0].message
+
+
+def test_repeated_key_refused(good_root):
+    # news.yml line 2 is `  text: "Test project published"`; repeat it on a new line 3.
+    _replace(good_root / "news.yml", '  text: "Test project published"\n',
+             '  text: "Test project published"\n  text: "A second text"\n')
+    _, r = load_content(good_root)
+    assert len(r.errors) == 1, r.errors
+    p = r.errors[0]
+    assert p.file == "content/news.yml"
+    assert '"text"' in p.message and "line 3" in p.message and "twice" in p.message
+
+
+def test_repeated_key_in_project_header_names_the_file_line(good_root):
+    # line 1 is `---`, line 2 `title: ...`, line 3 `subtitle: ...`; add a second title as line 4.
+    _replace(good_root / PROJECT, 'subtitle: "A test project for the checker"\n',
+             'subtitle: "A test project for the checker"\ntitle: "Another title"\n')
+    _, r = load_content(good_root)
+    assert len(r.errors) == 1, r.errors
+    p = r.errors[0]
+    assert p.file == f"content/{PROJECT}"
+    assert '"title"' in p.message and "line 4" in p.message
+
+
+def test_repeated_key_in_nested_mapping_refused(good_root):
+    _replace(good_root / "profile.yml", "  github: https://github.com/test-person\n",
+             "  github: https://github.com/test-person\n  github: https://github.com/other\n")
+    _, r = load_content(good_root)
+    assert len(r.errors) == 1 and '"github"' in r.errors[0].message, r.errors
