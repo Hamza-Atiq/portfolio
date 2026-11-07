@@ -3,7 +3,8 @@ title: "If one power line fails, does anything overload?"
 subtitle: "N-1 contingency screening with a graph neural network (IEEE 57-bus)"
 slug: p013-grid-contingency
 kind: research
-status: draft
+status: published
+reviewed_by_hamza: 2026-11-07
 date: 2026-10
 tags: [Power systems, Graph neural networks]
 team: solo

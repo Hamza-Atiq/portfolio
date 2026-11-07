@@ -35,17 +35,19 @@
     - { title: "IELTS Prep, Week 1 Day 4", url: "https://www.youtube.com/watch?v=qD5yT774SuY" }
     - { title: "IELTS Listening, Module 1", url: "https://www.youtube.com/watch?v=rmQXQO2r7FU" }
     - { title: "IELTS Reading, Module 5", url: "https://www.youtube.com/watch?v=FjWDd0G7tSc" }
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
 - slug: calico-prep-2026
   title: "CALICO coding competition prep sessions"
   org: "iCodeGuru"
-  role: "Instructor"
+  role: "Volunteer instructor"
   text: "Solved and explained past problems from Berkeley CALICO Spring 2026 to help students prepare for the competition. The recordings are public."
   date: 2026-10-26
   videos:
     - { title: "CALICO 2026 prep, Week 1 Day 1 (Spring 2026 problem 1)", url: "https://www.youtube.com/watch?v=ovbXnwzVd5I" }
     - { title: "CALICO 2026 prep, Week 1 Day 3 (Spring 2026 problem 4)", url: "https://www.youtube.com/watch?v=dNxigLqz7gM" }
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
 - slug: claude-code-workshop
   title: "Weekly Workshop: Basics of Claude Code"
   org: "iCodeGuru"
@@ -54,7 +56,8 @@
   date: 2026-04-05
   videos:
     - { title: "Weekly Workshop: Basics of Claude Code", url: "https://www.youtube.com/watch?v=8gqf-Jy56WE" }
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
 - slug: mit-informatics-2026
   title: "MIT Informatics Tournament Spring 2026"
   org: "iCodeGuru"
@@ -63,4 +66,5 @@
   date: 2026-03-10
   videos:
     - { title: "MIT Informatics Tournament Spring 2026, Day 2", url: "https://www.youtube.com/watch?v=mhP0_a75Le4" }
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07

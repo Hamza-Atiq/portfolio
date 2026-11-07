@@ -3,14 +3,16 @@
   date: 2026
   group: main
   proof_url: https://www.linkedin.com/feed/update/urn:li:activity:7463530859355234304/
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 1
 - slug: bluequbit-yale-2026
   text: "BlueQubit × Yale Peaked Hackathon 2026: rank 53 of 549"
   date: 2026
   group: main
   proof_url: https://www.linkedin.com/feed/update/urn:li:activity:7446861118070874113/
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 2
 - slug: berkeley-calico-2026
   text: "Berkeley CALICO Spring 2026: team of 3, Bronze Brick Award (Pakistan #32 of 78); global #269 of 375"
@@ -18,21 +20,24 @@
   group: main
   proof_url: https://www.linkedin.com/feed/update/urn:li:activity:7455240190094209025/
   proof_id: calico-certificate
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 3
 - slug: cs50x-puzzle-day-2025
   text: "Harvard CS50x Puzzle Day 2025: team solved all 9 of 9 puzzles"
   date: 2025
   group: main
   proof_url: https://drive.google.com/drive/folders/1fz1P4sLwm-VWJWcH7rl50uRbsxLM4juK
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 4
 - slug: amd-developer-2026
   text: "AMD Developer Hackathon 2026: Finalist, team of 3"
   date: 2026
   group: main
   proof_url: https://lablab.ai/ai-hackathons/amd-developer/alphazero/lumi-ai-voice-helper-for-elderly-with-dementia
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 5
 - slug: giki-solar-load-2024
   text: "Solar Production and Load Prediction (Kaggle, GIKI DNN Bootcamp 2024): 10th place"
@@ -40,26 +45,30 @@
   group: main
   proof_url: https://drive.google.com/file/d/12ALIN7U_EwQAv3Qfbog78xHCUQeBnThF/view
   proof_id: giki-leaderboard
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 6
 - slug: meta-hacker-cup-2025
   text: "Meta Hacker Cup 2025, Round 1: 7,798th"
   date: 2025
   group: other
   proof_url: https://drive.google.com/file/d/1216XqffJM2Dy60q2fS5gnitr8OlNsDMP/view
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 1
 - slug: mit2-2025
   text: "M(IT)² coding competition 2025, Round 1: rank 482 of 559"
   date: 2025
   group: other
   proof_url: https://www.linkedin.com/feed/update/urn:li:activity:7447652001292926976/
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 2
 - slug: hackerrank-orchestrate-2026
   text: "HackerRank Orchestrate (May 2026): rank 427 of 1,349"
   date: 2026-05
   group: other
   proof_url: https://www.linkedin.com/feed/update/urn:li:activity:7463538925442105344/
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-07
   pin: 3
