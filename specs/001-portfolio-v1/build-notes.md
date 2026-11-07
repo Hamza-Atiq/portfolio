@@ -37,8 +37,8 @@ Each note: what the step said, what went wrong, what was done.
     on cream `#FAF8F4` has contrast 3.43:1, below the 4.5:1 AA level for normal text. Light mode uses
     `#9A6516` (4.66:1) for amber **text** (links, tagline, site name, the primary button), and keeps `#B7791F` for
     borders and the glow (non-text parts need 3:1, which it meets). All other colours pass unchanged.
-12. **Task 9, site name.** The header shows `~/hamza-atiq`. So that page code holds no personal text, it is made
-    from `profile.name` ("Hamza Atiq" → `~/hamza-atiq`).
+12. **Task 9, site name.** The header and footer show `profile.name` ("Hamza Atiq") in the serif font, so the page
+    code holds no personal text. (Until 2026-11-07 it was `~/hamza-atiq`; Hamza asked to remove code symbols.)
 13. **Task 9, test data.** `npm run fixture` (in `site/`) makes the test photos and runs the checker on
     `checker/tests/fixtures/good` with `--skip-network --include-drafts`, as the plan says. Vitest reads the
     committed copy `site/tests/fixture-content.json` (set in `vitest.config.ts`), never `site/data/content.json`.
