@@ -1,0 +1,6 @@
+reviewed_by_hamza: 2026-10-24
+groups:
+  - name: "Programming"
+    items: ["Python", "TypeScript"]
+  - name: "Tools"
+    items: ["Git"]

@@ -1,0 +1,10 @@
+reviewed_by_hamza: 2026-11-07
+groups:
+  - name: "Programming"
+    items: ["Python"]
+  - name: "ML"
+    items: ["PyTorch", "Graph neural networks", "scikit-learn", "Hugging Face", "OpenVINO"]
+  - name: "Power systems"
+    items: ["pandapower", "AC power flow", "N-1 contingency analysis"]
+  - name: "Tools"
+    items: ["Git", "pytest", "FastAPI", "Docker", "SQLite", "Vercel", "OR-Tools (CP-SAT)", "MuJoCo"]

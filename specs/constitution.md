@@ -20,6 +20,8 @@ These rules apply to every spec, every plan and every change. If a change breaks
    Every image has a short description (alt text).
 8. **Privacy first.** No date of birth, ID numbers, home address, phone number or secret keys anywhere.
    Every proof file is checked for private details before it is added.
+   One exception, Hamza's own choice (2026-11-03): his CV PDF is published exactly as it is, with his
+   phone number in it. The rule still holds for everything else.
 9. **Free to run.** Vercel Hobby, Neon free tier, GitHub free. Any paid item needs Hamza's approval.
 10. **Simple English** in all text written for Hamza (specs, plans, messages). Site text is clear,
     calm and professional; no hype, no vanity numbers (views, followers).

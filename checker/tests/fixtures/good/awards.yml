@@ -1,0 +1,15 @@
+- slug: test-award-main
+  text: "Test Contest 2026: team of 3, rank 1 of 10"
+  date: 2026-03
+  group: main
+  proof_url: https://example.com/proof/test-award
+  proof_id: test-certificate
+  status: published
+  reviewed_by_hamza: 2026-10-24
+- slug: test-award-other
+  text: "Test Cup 2025, Round 1: rank 5 of 50"
+  date: 2025
+  group: other
+  proof_url: https://www.linkedin.com/posts/test-person-post
+  status: published
+  reviewed_by_hamza: 2026-10-24

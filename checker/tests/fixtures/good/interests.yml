@@ -1,0 +1,8 @@
+reviewed_by_hamza: 2026-10-24
+items:
+  - slug: power-systems
+    label: "Power systems"
+    sentence: "Test sentence about power systems."
+  - slug: tinyml
+    label: "TinyML"
+    sentence: "Test sentence about TinyML."

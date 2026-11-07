@@ -1,0 +1,70 @@
+- slug: icodeguru-volunteer
+  title: "Live DSA and IELTS-for-scholarships sessions"
+  org: "iCodeGuru"
+  role: "Volunteer instructor"
+  text: "Taught 17 DSA sessions and 13 IELTS-for-scholarships sessions, most of them live on Zoom with 10 to 20 students. The recordings are public."
+  date: 2026-10
+  videos:
+    - { title: "DSA Neetcode 75, Week 6 Day 5", url: "https://www.youtube.com/watch?v=vv6uJwyhXEo" }
+    - { title: "DSA Neetcode 75, Week 6 Day 4", url: "https://www.youtube.com/watch?v=e_K7lCRFrS4" }
+    - { title: "DSA Neetcode 75, Week 6 Day 3", url: "https://www.youtube.com/watch?v=xnfYH86RQek" }
+    - { title: "DSA Neetcode 75, Week 6 Day 2", url: "https://www.youtube.com/watch?v=d8IfZGy66kc" }
+    - { title: "DSA Neetcode 75, Week 5 Day 2", url: "https://www.youtube.com/watch?v=cGVadfgzGuw" }
+    - { title: "DSA Neetcode 75, Week 5 Day 1", url: "https://www.youtube.com/watch?v=a-PQjfJ8ZWE" }
+    - { title: "DSA Neetcode 75, Week 4 Day 2", url: "https://www.youtube.com/watch?v=RY7kD09g3w8" }
+    - { title: "DSA Neetcode 75, Week 3 Day 2", url: "https://youtu.be/Lvlhb-rWGAI" }
+    - { title: "DSA Neetcode 75, Week 3 Day 1", url: "https://www.youtube.com/watch?v=ikcrPUeCc4c" }
+    - { title: "DSA Neetcode 75, Week 2 Day 2", url: "https://www.youtube.com/watch?v=J2YANc_lg9Y" }
+    - { title: "Mastering DSA, Week 3 Day 5", url: "https://www.youtube.com/watch?v=zX-XQBnLQPw" }
+    - { title: "Mastering DSA, Week 3 Day 4", url: "https://www.youtube.com/watch?v=cNzeZuXCzNE" }
+    - { title: "DSA, Week 2 Day 5", url: "https://www.youtube.com/live/-ovVjyYysKQ" }
+    - { title: "Mastering DSA, Week 1 Day 5", url: "https://www.youtube.com/watch?v=yyBFDqNPf1U" }
+    - { title: "DSA: Two Sum", url: "https://www.youtube.com/watch?v=_OdadVsRpmw" }
+    - { title: "DSA: Binary tree level order traversal", url: "https://www.youtube.com/watch?v=JTMRRpWzQAI" }
+    - { title: "DSA: LeetCode Problem 19", url: "https://www.youtube.com/watch?v=ya2RLrraz-Q" }
+    - { title: "IELTS Prep, Week 4 Day 4", url: "https://www.youtube.com/watch?v=XQo-rwYtfzU" }
+    - { title: "IELTS Prep, Week 4 Day 3", url: "https://www.youtube.com/watch?v=F5wk4MVyh4I" }
+    - { title: "IELTS Prep, Week 4 Day 2", url: "https://www.youtube.com/watch?v=pT5kmR6SAP4" }
+    - { title: "IELTS Prep, Week 4 Day 1", url: "https://www.youtube.com/watch?v=Q0qKysYc7RY" }
+    - { title: "IELTS Prep, Week 3 Day 5", url: "https://www.youtube.com/watch?v=qlrc75Wulbw" }
+    - { title: "IELTS Prep, Week 3 Day 2", url: "https://www.youtube.com/watch?v=7QewNVZV-H8" }
+    - { title: "IELTS Prep, Week 3 Day 1", url: "https://www.youtube.com/watch?v=Z8iW4-Opjtw" }
+    - { title: "IELTS Prep, Week 2 Day 5", url: "https://www.youtube.com/watch?v=wTvo_M1pPvc" }
+    - { title: "IELTS Prep, Week 2 Day 4", url: "https://www.youtube.com/watch?v=SDcyQ9HgvJM" }
+    - { title: "IELTS Prep, Week 2 Day 1", url: "https://www.youtube.com/watch?v=WUSnF-0x1WQ" }
+    - { title: "IELTS Prep, Week 1 Day 4", url: "https://www.youtube.com/watch?v=qD5yT774SuY" }
+    - { title: "IELTS Listening, Module 1", url: "https://www.youtube.com/watch?v=rmQXQO2r7FU" }
+    - { title: "IELTS Reading, Module 5", url: "https://www.youtube.com/watch?v=FjWDd0G7tSc" }
+  status: published
+  reviewed_by_hamza: 2026-11-07
+- slug: calico-prep-2026
+  title: "CALICO coding competition prep sessions"
+  org: "iCodeGuru"
+  role: "Volunteer instructor"
+  text: "Solved and explained past problems from Berkeley CALICO Spring 2026 to help students prepare for the competition. The recordings are public."
+  date: 2026-10-26
+  videos:
+    - { title: "CALICO 2026 prep, Week 1 Day 1 (Spring 2026 problem 1)", url: "https://www.youtube.com/watch?v=ovbXnwzVd5I" }
+    - { title: "CALICO 2026 prep, Week 1 Day 3 (Spring 2026 problem 4)", url: "https://www.youtube.com/watch?v=dNxigLqz7gM" }
+  status: published
+  reviewed_by_hamza: 2026-11-07
+- slug: claude-code-workshop
+  title: "Weekly Workshop: Basics of Claude Code"
+  org: "iCodeGuru"
+  role: "Workshop speaker"
+  text: "Gave a live workshop on the basics of Claude Code. The recording is public."
+  date: 2026-04-05
+  videos:
+    - { title: "Weekly Workshop: Basics of Claude Code", url: "https://www.youtube.com/watch?v=8gqf-Jy56WE" }
+  status: published
+  reviewed_by_hamza: 2026-11-07
+- slug: mit-informatics-2026
+  title: "MIT Informatics Tournament Spring 2026"
+  org: "iCodeGuru"
+  role: "Problem solver and helper"
+  text: "Competed as a problem solver and helped prepare other students for the tournament."
+  date: 2026-03-10
+  videos:
+    - { title: "MIT Informatics Tournament Spring 2026, Day 2", url: "https://www.youtube.com/watch?v=mhP0_a75Le4" }
+  status: published
+  reviewed_by_hamza: 2026-11-07

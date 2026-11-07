@@ -1,0 +1,256 @@
+{
+ "awards": {
+  "main": [
+   {
+    "date": "2026-03",
+    "group": "main",
+    "pin": null,
+    "proof_file": {
+     "label": "proof",
+     "url": "/c/proofs/test_certificate.png"
+    },
+    "proof_url": "https://example.com/proof/test-award",
+    "reviewed_by_hamza": "2026-10-24",
+    "slug": "test-award-main",
+    "status": "published",
+    "text": "Test Contest 2026: team of 3, rank 1 of 10"
+   }
+  ],
+  "other": [
+   {
+    "date": "2025",
+    "group": "other",
+    "pin": null,
+    "proof_file": null,
+    "proof_url": "https://www.linkedin.com/posts/test-person-post",
+    "reviewed_by_hamza": "2026-10-24",
+    "slug": "test-award-other",
+    "status": "published",
+    "text": "Test Cup 2025, Round 1: rank 5 of 50"
+   }
+  ]
+ },
+ "generated_at": "2026-11-03T18:34:06Z",
+ "hash": "ca638e18d29fb1e0a62a6f9d5573b4d05972fdda0a8fe9abaa210f25a8b14dc8",
+ "include_drafts": true,
+ "interests": [
+  {
+   "label": "Power systems",
+   "sentence": "Test sentence about power systems.",
+   "slug": "power-systems"
+  },
+  {
+   "label": "TinyML",
+   "sentence": "Test sentence about TinyML.",
+   "slug": "tinyml"
+  }
+ ],
+ "news": [
+  {
+   "date": "2026-11",
+   "link": {
+    "label": "proof",
+    "url": "https://example.com/proof/draft"
+   },
+   "pin": null,
+   "reviewed_by_hamza": null,
+   "slug": "test-draft-news",
+   "status": "draft",
+   "text": "A draft news line"
+  },
+  {
+   "date": "2026-10",
+   "link": {
+    "label": "code",
+    "url": "https://example.com/code/test-project"
+   },
+   "pin": null,
+   "reviewed_by_hamza": "2026-10-24",
+   "slug": "test-project-live",
+   "status": "published",
+   "text": "Test project published"
+  },
+  {
+   "date": "2026-03-15",
+   "link": {
+    "label": "proof",
+    "url": "https://example.com/proof/test-award"
+   },
+   "pin": null,
+   "reviewed_by_hamza": "2026-10-24",
+   "slug": "test-award-news",
+   "status": "published",
+   "text": "Test team got rank 1 of 10"
+  }
+ ],
+ "profile": {
+  "cv_file": "/c/cv/test_cv.pdf",
+  "cv_reviewed_by_hamza": "2026-10-24",
+  "email": "test.person@example.com",
+  "english_test": {
+   "text": "English: test score 100 (Jan 2026)",
+   "url": "https://example.com/english-test"
+  },
+  "facts": [
+   {
+    "detail": "Test university, 2019",
+    "label": "Education",
+    "link": null,
+    "title": "Test degree"
+   },
+   {
+    "detail": null,
+    "label": "Research",
+    "link": "#research",
+    "title": "Test research area"
+   },
+   {
+    "detail": "Test sessions",
+    "label": "Teaching",
+    "link": "#teaching",
+    "title": "Test instructor"
+   },
+   {
+    "detail": "Team of 3, rank 1 of 10",
+    "label": "Competitions",
+    "link": "https://example.com/proof/test-award",
+    "title": "Test Contest 2026"
+   }
+  ],
+  "links": {
+   "devpost": "https://example.com/devpost/test-person",
+   "github": "https://github.com/test-person",
+   "lablab": "https://example.com/lablab/test-person",
+   "leetcode": "https://example.com/leetcode/test-person",
+   "linkedin": "https://www.linkedin.com/in/test-person"
+  },
+  "name": "Test Person",
+  "photo_dark": {
+   "alt": "Test photo, dark mode",
+   "src": "/c/photo/test_dark.png"
+  },
+  "photo_light": {
+   "alt": "Test photo, light mode",
+   "src": "/c/photo/test_light.png"
+  },
+  "reviewed_by_hamza": "2026-10-24",
+  "summary": "This is test text for the checker. It is not about a real person.",
+  "tagline": "// test line → ok"
+ },
+ "projects": [
+  {
+   "body": "## Problem\n\nA test problem. See [the test page](https://example.com/body-link).\n\n## Method\n\n```\nhttps://example.com/in-a-code-block-not-checked\n```\n\n## Results\n\nLong text must wrap on a phone: `results/n1_screening/ieee57_bus_contingency_ranking_all_eighty_lines_v2.csv`\nand averylongwordwithoutanyspacesthatwouldpushthepagesidewaysonasmallphonescreen.\n",
+   "cover": {
+    "alt": "Test cover image",
+    "src": "/c/images/p013/cover.png"
+   },
+   "date": "2026-10",
+   "images": [],
+   "kind": "research",
+   "links": {
+    "code": "https://example.com/code/test-project",
+    "demo": "https://example.com/demo/test-project"
+   },
+   "my_role": "Built the test project",
+   "pin": 1,
+   "proofs": [],
+   "result": "Test result: 99% on 10 test cases.",
+   "reviewed_by_hamza": "2026-10-24",
+   "slug": "p013-grid-contingency",
+   "status": "published",
+   "subtitle": "A test project for the checker",
+   "summary": "A test summary for the checker.",
+   "tags": [
+    "power-systems",
+    "graph-neural-networks"
+   ],
+   "team": "solo",
+   "title": "Test project: does a line overload?"
+  }
+ ],
+ "search_index": [
+  {
+   "kind": "project",
+   "slug": "p013-grid-contingency",
+   "text": "A test project for the checker A test summary for the checker. Test result: 99% on 10 test cases. power-systems graph-neural-networks",
+   "title": "Test project: does a line overload?",
+   "url": "/projects/p013-grid-contingency"
+  },
+  {
+   "kind": "award",
+   "slug": "test-award-main",
+   "text": "Test Contest 2026: team of 3, rank 1 of 10",
+   "title": "Test Contest 2026: team of 3, rank 1 of 10",
+   "url": "/#awards"
+  },
+  {
+   "kind": "award",
+   "slug": "test-award-other",
+   "text": "Test Cup 2025, Round 1: rank 5 of 50",
+   "title": "Test Cup 2025, Round 1: rank 5 of 50",
+   "url": "/#awards"
+  },
+  {
+   "kind": "news",
+   "slug": "test-draft-news",
+   "text": "A draft news line",
+   "title": "A draft news line",
+   "url": "/#news"
+  },
+  {
+   "kind": "news",
+   "slug": "test-project-live",
+   "text": "Test project published",
+   "title": "Test project published",
+   "url": "/#news"
+  },
+  {
+   "kind": "news",
+   "slug": "test-award-news",
+   "text": "Test team got rank 1 of 10",
+   "title": "Test team got rank 1 of 10",
+   "url": "/#news"
+  },
+  {
+   "kind": "teaching",
+   "slug": "test-teaching",
+   "text": "Test Org Volunteer instructor Taught test sessions.",
+   "title": "Test live sessions",
+   "url": "/#teaching"
+  }
+ ],
+ "skills": [
+  {
+   "items": [
+    "Python",
+    "TypeScript"
+   ],
+   "name": "Programming"
+  },
+  {
+   "items": [
+    "Git"
+   ],
+   "name": "Tools"
+  }
+ ],
+ "teaching": [
+  {
+   "date": "2026-04",
+   "org": "Test Org",
+   "pin": null,
+   "reviewed_by_hamza": "2026-10-24",
+   "role": "Volunteer instructor",
+   "slug": "test-teaching",
+   "status": "published",
+   "text": "Taught test sessions.",
+   "title": "Test live sessions",
+   "videos": [
+    {
+     "title": "Test lecture 1",
+     "url": "https://www.youtube.com/watch?v=abcdefghijk"
+    }
+   ]
+  }
+ ]
+}

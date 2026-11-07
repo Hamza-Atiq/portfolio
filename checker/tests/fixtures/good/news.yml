@@ -1,0 +1,17 @@
+- slug: test-project-live
+  text: "Test project published"
+  date: 2026-10
+  link: { label: code, url: https://example.com/code/test-project }
+  status: published
+  reviewed_by_hamza: 2026-10-24
+- slug: test-award-news
+  text: "Test team got rank 1 of 10"
+  date: 2026-03-15
+  link: { label: proof, url: https://example.com/proof/test-award }
+  status: published
+  reviewed_by_hamza: 2026-10-24
+- slug: test-draft-news
+  text: "A draft news line"
+  date: 2026-11
+  link: { label: proof, url: https://example.com/proof/draft }
+  status: draft
