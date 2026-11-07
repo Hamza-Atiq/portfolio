@@ -214,11 +214,11 @@ its Pakistan and global rank.)
     until it passes.
 - **Layout (Hamza, 2026-11-03; he rejected the first build's narrow centre column):**
   - On a laptop the content uses a wide container, about 1,100 px at a 1440 px screen, with side margins of about 170 px. Long reading text keeps a comfortable line length, but sections use the full width.
-  - A fixed top menu: site name `~/hamza-atiq`, links to the sections with the current section marked, a small search button, CV, and the ☀/☾ button.
+  - A fixed top menu: site name "Hamza Atiq" (Hamza, 2026-11-07: no code-style `~/` or `//` symbols anywhere), links to the sections with the current section marked, a small search button, CV, and the ☀/☾ button.
   - First screen: name, one line, summary and buttons on the left; round photo on the right. Below them, a row of four key facts (Education, Research, Teaching, Competitions) from `profile.yml`, each linked to its section or proof.
   - Sections are clearly separated by bands or lines. News is a two-column list (date, then text and link). Interests are a 3-column grid of short cards. Projects are wide rows: image on the left; title, result and links on the right. Teaching is a timeline with role and dates, showing at most 3 video thumbnails per item with "show all" for the rest. Awards are rows with year, text and proof.
   - Phones stack everything into one column (FR-22 is unchanged).
-- **Type (Hamza, 2026-11-03):** the name and section titles use a classic serif font; body text uses a clean sans-serif font; fonts are served with the site, not from another company's server. This replaces the earlier code-style titles such as `## news`. The site name `~/hamza-atiq` stays in the menu.
+- **Type (Hamza, 2026-11-03):** the name and section titles use a classic serif font; body text uses a clean sans-serif font; fonts are served with the site, not from another company's server. This replaces the earlier code-style titles such as `## news`. The site name in the menu and footer is "Hamza Atiq" in the serif font; the line above the name is plain text ("Electrical engineer → AI"). Words shown on the page start with a capital letter (link labels, team, tags), except brand names written in small letters (iCodeGuru, pandapower, scikit-learn, pytest).
 - A small `proof ↗` / `code ↗` link stays next to each claim.
 - **No** decorative art, **no** big headline number tiles, **no** count-up animations. A project's result is shown
   small and plain inside its card and page, together with how it was measured.

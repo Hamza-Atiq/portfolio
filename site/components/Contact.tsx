@@ -5,7 +5,7 @@ const NAMES = {
   github: "GitHub",
   linkedin: "LinkedIn",
   leetcode: "LeetCode",
-  lablab: "lablab",
+  lablab: "Lablab.ai",
   devpost: "Devpost",
 } as const;
 

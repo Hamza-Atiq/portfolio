@@ -8,6 +8,11 @@ export function formatDate(value: string): string {
   return d ? `${Number(d)} ${month} ${y}` : `${month} ${y}`;
 }
 
+/** "solo" → "Solo", "proof" → "Proof": shown words start with a capital letter. */
+export function capitalize(value: string): string {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
 /** The YouTube video id of a link, or null. */
 export function youtubeId(url: string): string | null {
   try {

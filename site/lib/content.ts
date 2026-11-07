@@ -126,15 +126,8 @@ export function getProject(slug: string): Project | undefined {
   return bundle.projects.find((p) => p.slug === slug);
 }
 
-/** `~/hamza-atiq` style site name, made from the profile name. */
+/** The site name in the menu and footer: the profile name as written ("Hamza Atiq"). Hamza, 2026-11-07:
+ *  no code-style symbols such as `~/hamza-atiq`. */
 export function siteName(profile: Profile): string {
-  return (
-    "~/" +
-    profile.name
-      .normalize("NFKD")
-      .replace(/[̀-ͯ]/g, "")
-      .toLowerCase()
-      .replace(/[^a-z0-9]+/g, "-")
-      .replace(/^-|-$/g, "")
-  );
+  return profile.name;
 }

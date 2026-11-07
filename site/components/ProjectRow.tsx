@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import ClaimLink from "@/components/ClaimLink";
 import type { Project } from "@/lib/content";
-import { formatDate } from "@/lib/format";
+import { capitalize, formatDate } from "@/lib/format";
 
 /** A wide project row: image on the left; title, result and links on the right (spec §6). */
 export default function ProjectRow({ project }: { project: Project }) {
@@ -17,7 +17,7 @@ export default function ProjectRow({ project }: { project: Project }) {
       )}
       <div className="project-body">
         <p className="project-meta">
-          {formatDate(project.date)} · {project.team}
+          {formatDate(project.date)} · {capitalize(project.team)}
         </p>
         <h3 className="project-title">
           <Link href={href}>{project.title}</Link>

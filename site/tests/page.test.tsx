@@ -146,9 +146,9 @@ describe("main page", () => {
   it("each_claim_has_a_proof_link", () => {
     const { container } = render(<Home bundle={fresh()} />);
     const awards = container.querySelector("#awards") as HTMLElement;
-    expect(within(awards).getAllByText("proof ↗").length).toBe(2);
+    expect(within(awards).getAllByText("Proof ↗").length).toBe(2);
     const news = container.querySelector("#news") as HTMLElement;
-    expect(within(news).getAllByText(/^(code|proof) ↗$/).length).toBe(getBundle().news.length);
+    expect(within(news).getAllByText(/^(Code|Proof) ↗$/).length).toBe(getBundle().news.length);
   });
 
   it("email_shown_as_text_and_mailto", () => {

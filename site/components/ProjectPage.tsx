@@ -3,7 +3,7 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import ClaimLink from "@/components/ClaimLink";
 import type { Project } from "@/lib/content";
-import { formatDate } from "@/lib/format";
+import { capitalize, formatDate } from "@/lib/format";
 
 const LINK_NAMES: Record<string, string> = {
   code: "Code",
@@ -30,7 +30,7 @@ export default function ProjectPage({ project }: { project: Project }) {
           <div className={project.cover ? "project-hero-grid" : "project-hero-grid no-cover"}>
             <div>
               <p className="project-meta">
-                {formatDate(project.date)} · {project.team} · {project.kind === "research" ? "Research" : "Hackathon"}
+                {formatDate(project.date)} · {capitalize(project.team)} · {project.kind === "research" ? "Research" : "Hackathon"}
               </p>
               <h1 className="project-page-title">{project.title}</h1>
               <p className="project-page-subtitle">{project.subtitle}</p>
@@ -82,7 +82,7 @@ export default function ProjectPage({ project }: { project: Project }) {
               <dt>Date</dt>
               <dd>{formatDate(project.date)}</dd>
               <dt>Team</dt>
-              <dd>{project.team}</dd>
+              <dd>{capitalize(project.team)}</dd>
               {project.my_role && (
                 <>
                   <dt>My role</dt>

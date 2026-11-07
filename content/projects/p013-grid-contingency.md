@@ -5,7 +5,7 @@ slug: p013-grid-contingency
 kind: research
 status: draft
 date: 2026-10
-tags: [power-systems, graph-neural-networks]
+tags: [Power systems, Graph neural networks]
 team: solo
 my_role: "Built everything: data generation, model, solver check, tests, live page"
 summary: "An AI ranks all 80 possible line failures; a real power-flow solver confirms only the risky ones."

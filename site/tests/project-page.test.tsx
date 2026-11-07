@@ -25,7 +25,7 @@ describe("project page", () => {
     const p = p013();
     const { container, getByRole } = render(<ProjectPage project={p} />);
     expect(getByRole("heading", { level: 1 }).textContent).toBe(p.title);
-    expect(container.textContent).toContain("solo");
+    expect(container.textContent).toContain("Solo");
     expect(container.textContent).toContain(p.result);
     expect(container.textContent).toContain(p.my_role!);
     expect(container.querySelector("a[href='https://example.com/code/test-project']")).not.toBeNull();
@@ -36,7 +36,7 @@ describe("project page", () => {
     const p = { ...p013(), my_role: null, team: "team of 3" };
     const { container } = render(<ProjectPage project={p} />);
     expect(container.textContent).not.toMatch(/my role/i);
-    expect(container.textContent).toContain("team of 3");
+    expect(container.textContent).toContain("Team of 3");
   });
 
   it("markdown_raw_html_not_rendered", () => {
