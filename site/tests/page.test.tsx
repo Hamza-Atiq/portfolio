@@ -159,10 +159,21 @@ describe("main page", () => {
     expect(contact.querySelector(`a[href='mailto:${email}']`)).not.toBeNull();
   });
 
-  it("interest_chips_jump_to_section", () => {
+  it("interest_chips_link_only_when_a_project_matches", () => {
     const { container } = render(<Home bundle={fresh()} />);
-    const chips = container.querySelectorAll("#about a.chip");
-    expect(chips.length).toBe(getBundle().interests.length);
-    chips.forEach((c) => expect(c.getAttribute("href")).toBe("#interests"));
+    // Fixture: "Power systems" has project p013 (tag power-systems); "TinyML" has none.
+    const links = container.querySelectorAll("#about a.chip");
+    expect(links.length).toBe(1);
+    expect(links[0].getAttribute("href")).toBe("/projects/p013-grid-contingency");
+    const plain = container.querySelectorAll("#about span.chip-static");
+    expect(Array.from(plain).map((c) => c.textContent)).toEqual(["TinyML"]);
+  });
+
+  it("show_all_button_changes_text_when_open", () => {
+    const { container } = render(<Home bundle={fresh()} />);
+    container.querySelectorAll("details.more > summary").forEach((s) => {
+      expect(s.querySelector(".when-closed")?.textContent).toMatch(/^Show all/);
+      expect(s.querySelector(".when-open")?.textContent).toMatch(/^Show less/);
+    });
   });
 });

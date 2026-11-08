@@ -475,6 +475,21 @@ details.more > summary {
   color: var(--accent-text);
   font-weight: 600;
   font-size: 0.95rem;
+  list-style: none;
+}
+
+details.more > summary::-webkit-details-marker {
+  display: none;
+}
+
+/* The button text changes after a click (iCodeGuru review, 2026-11-08). */
+details.more .when-open,
+details.more[open] .when-closed {
+  display: none;
+}
+
+details.more[open] .when-open {
+  display: inline;
 }
 
 /* ================================================================ hero (About) */
@@ -506,15 +521,7 @@ details.more > summary {
   font-family: var(--display);
   line-height: 1.05;
   letter-spacing: 0.04em;
-  color: var(--accent-text); /* gold name (Hamza, 2026-11-08) */
-}
-
-/* Dark mode: soft gold shine on the name, like the test page Hamza liked. */
-:root:not([data-theme="light"]) .hero-name {
-  background: linear-gradient(180deg, #f8dd9c 0%, #f5b83d 55%, #c48a2a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-text); /* flat gold name, no gradient (Hamza chose B, 2026-11-08) */
 }
 
 .hero-summary {
@@ -553,6 +560,23 @@ details.more > summary {
 
 .chip:hover {
   border-color: var(--accent);
+}
+
+.chip-link {
+  border-color: var(--accent-text);
+  color: var(--accent-text);
+}
+
+.chip-static,
+.chip-static:hover {
+  border-color: var(--line);
+  background: transparent;
+  color: var(--muted);
+  cursor: default;
+}
+
+.chip-arrow {
+  margin-left: 0.4rem;
 }
 
 .chip[aria-pressed="true"] {

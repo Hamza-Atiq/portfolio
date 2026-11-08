@@ -15,7 +15,7 @@ export default function Home({ bundle }: { bundle: Bundle }) {
   const hackathons = bundle.projects.filter((p) => p.kind === "hackathon");
   return (
     <>
-      <About profile={bundle.profile} interests={bundle.interests} />
+      <About profile={bundle.profile} interests={bundle.interests} projects={bundle.projects} />
       <News items={bundle.news} />
       <Interests items={bundle.interests} />
       {research.length > 0 && (
