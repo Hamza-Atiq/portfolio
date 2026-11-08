@@ -10,3 +10,7 @@
   file: proofs/giki_kaggle_leaderboard_rank10.png
   note: "Kaggle leaderboard screenshot. Shows rank 10, Hamza Atique. Opened 2026-11-03: no private data."
   private_info_checked: true
+- id: amd-act3-certificate
+  file: proofs/lablab_amd_act3_completion.jpg
+  note: "lablab.ai Certificate of Completion, AMD Developer Hackathon ACT III, Oct 12 to 18, 2026 (Bearing Whisperer). Opened 2026-11-08: shows only name, event, date, certificate id; no private data."
+  private_info_checked: true
