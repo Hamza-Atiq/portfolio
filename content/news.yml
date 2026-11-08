@@ -1,7 +1,7 @@
 - slug: p013-published
   text: "Published P-013: an AI sorts all 80 possible line failures on a power grid, and a real solver confirms the risky ones"
   date: 2026-10
-  link: { label: code, url: https://github.com/Hamza-Atiq/p013-grid-contingency-screening }
+  link: { label: code, url: https://github.com/Hamza-Atiq/alert-test-dead-link-does-not-exist }
   status: published
   reviewed_by_hamza: 2026-11-07
 - slug: ucla-codesprint-2026
