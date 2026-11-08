@@ -70,7 +70,8 @@
   group: other
   proof_url: https://www.hackerrank.com/contests/hackerrank-orchestrate-october26/challenges/ghost-data-still-exists/leaderboard?username=hamzaatiq34
   proof_id: hackerrank-oct2026-certificate
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-08
   pin: 3
 - slug: hackerrank-orchestrate-2026
   text: "HackerRank Orchestrate (May 2026): rank 427 of 1,349"

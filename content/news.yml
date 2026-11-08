@@ -2,7 +2,8 @@
   text: "HackerRank Orchestrate (October 2026): rank 610 of 4,094"
   date: 2026-10
   link: { label: proof, url: "https://www.hackerrank.com/contests/hackerrank-orchestrate-october26/challenges/ghost-data-still-exists/leaderboard?username=hamzaatiq34" }
-  status: draft
+  status: published
+  reviewed_by_hamza: 2026-11-08
 - slug: p14-bearing-whisperer
   text: "Built Bearing Whisperer alone for the AMD Developer Hackathon ACT III: it hears a failing bearing in a motor's own current, tested on bearings it never saw"
   date: 2026-10
