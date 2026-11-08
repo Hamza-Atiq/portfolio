@@ -1,3 +1,8 @@
+- slug: p14-bearing-whisperer
+  text: "Built Bearing Whisperer alone for the AMD Developer Hackathon ACT III: it hears a failing bearing in a motor's own current, tested on bearings it never saw"
+  date: 2026-10
+  link: { label: code, url: https://github.com/Hamza-Atiq/bearing-whisperer }
+  status: draft
 - slug: p013-published
   text: "Published P-013: an AI sorts all 80 possible line failures on a power grid, and a real solver confirms the risky ones"
   date: 2026-10
