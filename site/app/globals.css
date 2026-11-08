@@ -506,6 +506,15 @@ details.more > summary {
   font-family: var(--display);
   line-height: 1.05;
   letter-spacing: 0.04em;
+  color: var(--accent-text); /* gold name (Hamza, 2026-11-08) */
+}
+
+/* Dark mode: soft gold shine on the name, like the test page Hamza liked. */
+:root:not([data-theme="light"]) .hero-name {
+  background: linear-gradient(180deg, #f8dd9c 0%, #f5b83d 55%, #c48a2a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .hero-summary {

@@ -1,29 +1,23 @@
-/** First-visit theme (spec FR-18): stored choice wins; else the device setting; else dark. */
+/**
+ * First-visit theme: the visitor's stored choice wins; otherwise DARK, whatever the device says.
+ * (Hamza, 2026-11-08: "by default dark mode, but anyone can switch to light mode". This replaces
+ * the old spec FR-18 rule "follow the device setting".)
+ */
 export type Theme = "dark" | "light";
 
 export const THEME_KEY = "theme";
 
-export function pickTheme(stored: string | null, prefersDark: boolean | null): Theme {
+export function pickTheme(stored: string | null): Theme {
   if (stored === "dark" || stored === "light") return stored;
-  if (prefersDark === true) return "dark";
-  if (prefersDark === false) return "light";
   return "dark";
 }
 
 /**
  * Runs inline in <head> before the first paint, so the page never flashes the wrong mode.
- * Same rules as pickTheme. Every storage access is inside try/catch (blocked storage in a private window).
+ * Same rules as pickTheme. Storage access is inside try/catch (blocked storage in a private window).
  */
 export const THEME_SCRIPT = `(function () {
-  var stored = null, prefersDark = null;
+  var stored = null;
   try { stored = window.localStorage.getItem("${THEME_KEY}"); } catch (e) {}
-  try {
-    if (typeof window.matchMedia === "function") {
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) prefersDark = true;
-      else if (window.matchMedia("(prefers-color-scheme: light)").matches) prefersDark = false;
-    }
-  } catch (e) {}
-  var theme = stored === "dark" || stored === "light" ? stored
-    : prefersDark === true ? "dark" : prefersDark === false ? "light" : "dark";
-  document.documentElement.dataset.theme = theme;
+  document.documentElement.dataset.theme = stored === "light" ? "light" : "dark";
 })();`;

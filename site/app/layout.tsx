@@ -14,10 +14,7 @@ export function generateMetadata(): Metadata {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#141417" },
-    { media: "(prefers-color-scheme: light)", color: "#FAF8F4" },
-  ],
+  themeColor: "#141417", // dark by default (Hamza, 2026-11-08)
 };
 
 /** Each page renders its own TopBar (it needs to know whether it is the main page) and <main>. */
