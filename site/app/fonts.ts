@@ -9,6 +9,15 @@ export const serif = localFont({
   fallback: ["Georgia", "Times New Roman", "serif"],
 });
 
+/** Roman-capital display font: only for Hamza's name and section headings (Hamza, 2026-11-08). */
+export const display = localFont({
+  src: "./fonts/cinzel-latin-wght.woff2",
+  weight: "400 900",
+  display: "swap",
+  variable: "--font-display",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
 export const sans = localFont({
   src: "./fonts/inter-latin-wght.woff2",
   weight: "100 900",
