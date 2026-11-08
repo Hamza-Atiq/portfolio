@@ -1,0 +1,7 @@
+Good work. I re-ran your build on another computer: 85 checker tests and 52 site tests pass, `tsc` and `npm run build` pass, and the page routes answer correctly. Please continue on branch `build/v1`, with the same rules as before. Stay on `build/v1`; no accounts, no secrets, no real deploys, no changes to repo settings.
+
+1. Plan Task 13 Steps 0, 1, 2 and 3 only: `notify.py` with its tests, the workflow file, `site/vercel.json`, and the README. Do not do Steps 4 and 5. Use Node 22 and Python 3.12 in the workflow (build notes 1 and 8). For Step 2, there is no real `content/` folder here, so run the exact commands against `checker/tests/fixtures/good`, and say so in build-notes.md. The real content check comes later, on the owner's computer.
+2. Plan Task 14 Step 1 only: write `site/e2e/acceptance.spec.ts` and run it against a local `next start` using the fixture data. A test that needs real content (such as `p013_page_opens` wording or `draft_not_on_public`) may be run only as far as the fixture allows; note which ones.
+3. Then review all the code on this branch against spec.md section by section, like a strict outside reviewer. Look for requirements that are missing or only pretend to work, tests that cannot really fail, and bugs a real visitor would hit on a phone. Fix each real problem with a test. List what you found and fixed in build-notes.md under "Self-review". Do not add features beyond the spec.
+
+Finish with the same kind of short report: last commit hash, exact test and build results, and which e2e tests ran or could not run.
