@@ -64,11 +64,20 @@
   status: published
   reviewed_by_hamza: 2026-11-07
   pin: 2
+- slug: hackerrank-orchestrate-oct-2026
+  text: "HackerRank Orchestrate (October 2026): rank 610 of 4,094"
+  date: 2026-10
+  group: other
+  proof_url: https://www.hackerrank.com/contests/hackerrank-orchestrate-october26/challenges/ghost-data-still-exists/leaderboard?username=hamzaatiq34
+  proof_id: hackerrank-oct2026-certificate
+  status: published
+  reviewed_by_hamza: 2026-11-08
+  pin: 3
 - slug: hackerrank-orchestrate-2026
   text: "HackerRank Orchestrate (May 2026): rank 427 of 1,349"
   date: 2026-05
   group: other
-  proof_url: https://www.linkedin.com/feed/update/urn:li:activity:7463538925442105344/
+  proof_url: https://www.hackerrank.com/contests/hackerrank-orchestrate-may26/challenges/support-agent/leaderboard?username=hamzaatiq34
   status: published
-  reviewed_by_hamza: 2026-11-07
-  pin: 3
+  reviewed_by_hamza: 2026-11-08
+  pin: 4
