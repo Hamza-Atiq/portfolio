@@ -51,7 +51,10 @@ export default function Teaching({ items }: { items: TeachingItem[] }) {
                 )}
                 {rest.length > 0 && (
                   <details className="more">
-                    <summary>Show all {t.videos.length} videos</summary>
+                    <summary>
+                      <span className="when-closed">Show all {t.videos.length} videos ▾</span>
+                      <span className="when-open">Show less ▴</span>
+                    </summary>
                     <ul className="videos">
                       {rest.map((v) => (
                         <VideoThumb key={v.url} video={v} />

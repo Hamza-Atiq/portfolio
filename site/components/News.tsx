@@ -31,7 +31,10 @@ export default function News({ items }: { items: NewsItem[] }) {
       </ul>
       {rest.length > 0 && (
         <details className="more">
-          <summary>Show all {items.length} news items</summary>
+          <summary>
+            <span className="when-closed">Show all {items.length} news items ▾</span>
+            <span className="when-open">Show less ▴</span>
+          </summary>
           <ul className="news-list">
             {rest.map((n) => (
               <Line key={n.slug} item={n} />
