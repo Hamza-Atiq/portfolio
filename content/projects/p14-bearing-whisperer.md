@@ -3,7 +3,8 @@ title: "Can a motor's own current tell that its bearing is failing?"
 subtitle: "Bearing Whisperer: bearing fault detection from motor current, tested on bearings the model never saw"
 slug: p14-bearing-whisperer
 kind: research
-status: draft
+status: published
+reviewed_by_hamza: 2026-11-08
 date: 2026-10
 tags: [Electric motors, Condition monitoring]
 team: solo
