@@ -23,13 +23,11 @@ export default function Home({ bundle }: { bundle: Bundle }) {
           <ProjectList projects={research} />
         </Section>
       )}
-      <Section id="hackathons" title="Hackathon projects" compact={hackathons.length === 0}>
-        {hackathons.length > 0 ? (
+      {hackathons.length > 0 && (
+        <Section id="hackathons" title="Hackathon projects">
           <ProjectList projects={hackathons} />
-        ) : (
-          <p className="muted empty-note">Hackathon projects are added one by one after review.</p>
-        )}
-      </Section>
+        </Section>
+      )}
       <Teaching items={bundle.teaching} />
       <Awards main={bundle.awards.main} other={bundle.awards.other} />
       <Skills groups={bundle.skills} />
