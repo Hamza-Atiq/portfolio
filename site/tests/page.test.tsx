@@ -24,7 +24,6 @@ describe("main page", () => {
       "news",
       "interests",
       "research",
-      "hackathons",
       "teaching",
       "awards",
       "skills",
@@ -41,13 +40,11 @@ describe("main page", () => {
     expect(container.querySelector("#skills")).toBeNull();
   });
 
-  it("hackathon_placeholder_shown", () => {
+  it("hackathon_section_hidden_when_empty", () => {
     const b = fresh();
     b.projects = b.projects.filter((p) => p.kind !== "hackathon");
     const { container } = render(<Home bundle={b} />);
-    const sec = container.querySelector("#hackathons") as HTMLElement;
-    expect(sec).not.toBeNull();
-    expect(sec.textContent).toContain("Hackathon projects are added one by one after review.");
+    expect(container.querySelector("#hackathons")).toBeNull();
   });
 
   it("news_shows_six_then_more", () => {
